@@ -19,11 +19,6 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script>
-        function showDialog() {
-            $( "#dialog" ).dialog();
-        }
-    </script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -32,6 +27,7 @@
 	
         <div class="chatbox">
 		
+			 
             <div id="boxchat" class="chat_messages" ng-init="chatsync()">
 
             </div>
