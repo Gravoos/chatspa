@@ -26,14 +26,12 @@
 	<div id="content">
 	
 		<form novalidate class="simple-form">
-<<<<<<< HEAD
-			<label>Nick: <input type="text" ng-model="core.nick"/></label><br>
-			<label>Wiadomość: <input type="text" ng-model="core.msg"/></label>
-=======
+			<label><input type="text" ng-model="core.nick" placeholder="Podaj nick.."/></label><br>
 			<label><input type="text" ng-model="core.msg" placeholder="Napisz wiadomość.."/></label>
->>>>>>> c59e2f5907ac408e8f8b8d58d7b283711e50fce6
+
 			<input type="button" ng-click="send()" value="Wyślij"/>
 			<input type="button" ng-click="clear()" value="Czyść"/>
+			
 		</form>
 		<pre>core = {{core}}</pre>
 	
