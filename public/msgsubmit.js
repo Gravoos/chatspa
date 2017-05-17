@@ -22,7 +22,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 
                     var cldiv = '<div class="chat somebody"><div class="user_photo"></div><div><p class="user_info">'+data.nick+', '+data.date+'</p> <p class="chat_message">'+data.msg+' </p></div></div>';
                         document.getElementById('boxchat').innerHTML += cldiv;
-
+				
+				$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
             })
         }
         startListening();
