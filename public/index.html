@@ -28,24 +28,8 @@
 	
         <div class="chatbox">
 		
-            <div class="chat_messages">
-			
-                <div class="chat somebody">
-                    <div class="user_photo"></div>
-						<div>
-							<p class="user_info">Brajanek, 12:31:12</p>
-							<p class="chat_message">elo </p>
-						</div>
-                </div>
-				
-				
-                <div class="chat self">
-                    <div class="user_photo"></div>
-                    <p class="chat_message">no elsahfdjjsahdfghlsafgdsadfsadfadfhasfdsafasosafdfsafdsaosadfsa sfsafsadhjfbhsdabfhsad hjasf dsf asf f saf asf asfsa df a asdfasfasdf asdfasfasdf sdfsdafasfaf asf af o
-                    </p>
-                </div>
-                
-				
+            <div id="boxchat" class="chat_messages" ng-init="chatsync()">
+
             </div>
 			
 			
@@ -58,7 +42,6 @@
                 </label>
                 <input type="button" ng-click="send()" value="Wyślij" />
                 <input type="button" ng-click="clear()" value="Czyść" />
-                <pre>core = {{core}}</pre>
         </div>
     </div>
 </body>

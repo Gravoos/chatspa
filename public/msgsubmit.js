@@ -12,4 +12,19 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.clear = function () {
         $scope.core = {};
     }
+    $scope.chatsync = function () {
+        var fb = firebase.database().ref().child("writes");
+        var startListening = function () {
+            fb.on('child_added', function (snapshot, prevChildKey) {
+                var data = snapshot.val();
+                console.log(data);
+
+
+                    var cldiv = '<div class="chat somebody"><div class="user_photo"></div><div><p class="user_info">'+data.nick+', '+data.date+'</p> <p class="chat_message">'+data.msg+' </p></div></div>';
+                        document.getElementById('boxchat').innerHTML += cldiv;
+
+            })
+        }
+        startListening();
+    }
 }]);
