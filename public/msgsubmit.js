@@ -17,10 +17,11 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var startListening = function () {
             fb.on('child_added', function (snapshot, prevChildKey) {
                 var data = snapshot.val();
-                console.log(data);
+                var time = new Date(data.date);
+                var srtime = time.getHours() + ":" + time.getMinutes() + ":" + time.getHours() + "  " + time.getDay() + "/" + (time.getMonth()+1) +"/" + time.getFullYear();
 
 
-                    var cldiv = '<div class="chat somebody"><div class="user_photo"></div><div><p class="user_info">'+data.nick+', '+data.date+'</p> <p class="chat_message">'+data.msg+' </p></div></div>';
+                    var cldiv = '<div class="chat somebody"><div class="user_photo"></div><div><p class="user_info">'+data.nick+', '+ srtime +'</p> <p class="chat_message">'+data.msg+' </p></div></div>';
                         document.getElementById('boxchat').innerHTML += cldiv;
 
             })
