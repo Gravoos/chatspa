@@ -2,11 +2,77 @@ body {
 	background-color: #C4D6C8;
 }
 
-#whole_page {
+
+.chatbox{
 	background-color: white;
-	width:700px;
-	height: 1000px;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: white;
+	width:600px;
+	height: 700px;
+	padding: 25px;
+	margin:20px auto;
+	box-shadow: 0 3px #ccc;
+}
+
+.chat_messages {
+	padding: 10px;
+	width: 100%;
+	height: 500px;
+	background: #eee;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	 
+}
+
+.chat_messages::-webkit-scrollbar {
+	width:10px;
+}
+
+
+.chat_messages::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.chat{
+	background-color: lightblue;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+	border-bottom: 1px solid grey; 
+	padding: 10px;
+}
+
+
+.chat .user_photo{
+	width: 60px;
+	height: 60px;
+	margin-top: 10px;
+	background: #ccc;
+	border-radius: 50%;
+	
+}
+
+.chat .user_info {
+	margin: 0px;
+	margin-left: 15px;
+	
+}
+
+.chat .chat_message {
+	width: 80%;
+	padding: 15px;
+	margin: 5px 10px 0;
+	background: green;
+	border-radius: 10px;
+	font-size: 18px;
+}
+
+.somebody .chat_message {
+	background: grey;
+}
+
+.self .chat_message {
 	
 }
