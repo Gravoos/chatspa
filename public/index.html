@@ -18,16 +18,24 @@
         };
         firebase.initializeApp(config);
 	</script>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div ng-controller="chatcore">
+
+<div id="whole_page" ng-controller="chatcore">
+	<div id="content">
+	
 		<form novalidate class="simple-form">
-			<label>Wiadomość: <input type="text" ng-model="core.msg"/></label>
+			<label><input type="text" ng-model="core.msg" placeholder="Napisz wiadomość.."/></label>
 			<input type="button" ng-click="send()" value="Wyślij"/>
 			<input type="button" ng-click="clear()" value="Czyść"/>
 		</form>
 		<pre>core = {{core}}</pre>
+	
+	
+	
 	</div>
+</div>
 
 </body>
 </html>
