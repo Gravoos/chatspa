@@ -1,4 +1,5 @@
 var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', function($scope) {
+		
     $scope.readyToSend = {};
     $scope.savednick;
     $scope.send = function() {
@@ -41,11 +42,11 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         document.getElementById("addr").value = "";
     }
     $scope.send_on_enter = function(keyEvent) {
+		
         if (keyEvent.which === 13 && !keyEvent.shiftKey) {
             $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
 
-		//	var room = document.getElementById('room_name').value;
-			
+			var room = $('#room_name').text();
             var rgx1 = /<[^>]*>/g;
 			
 			if(rgx1.test($scope.core.msg)){
@@ -57,7 +58,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 				var fb = firebase.database();
 				var key = firebase.database().ref().child('posts').push().key;
 				var updates = {};
-				updates['/writes/' + key] = $scope.core;
+				updates['/'+room+'/' + key] = $scope.core;
 				//   updates['/user-posts/' + uid + '/' + key] = postData;
 				firebase.database().ref().update(updates);
 				keyEvent.preventDefault();
@@ -70,8 +71,58 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.clear = function() {
         $scope.core = {};
     };
+	
+	$scope.roomSynch = function(room) {
+		$(".somebody").remove();
+		
+		
+        var fb = firebase.database().ref().child(room);
+		
+		
+		fb.on("value", function(snapshot, prevChildKey) {
+			  console.log("There are "+snapshot.numChildren()+" messages");
+			
+			
+				var data = snapshot.val();
+				console.log(data);
+				
+				
+				for (var key in data){
+					console.log(data[key].nick);
+					var time = new Date(data[key].date);
+					var srtime = time.toString().substring(0, 25);
+
+					var cldiv = '<div class="chat somebody">' +
+						'<div class="photo_box">' +
+						'<div class="user_photo"></div>' +
+						'</div>' +
+						'<div class="message_box">' +
+						'<p class="user_info">' + data[key].nick + ', ' +srtime+ '</p>' +
+						'<p class="chat_message">' + data[key].msg + '</p>' +
+						'</div>' +
+						'</div>';
+
+
+					document.getElementById('boxchat').innerHTML += cldiv;
+
+
+					$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+				}
+					
+					
+				
+			
+			
+			
+	    });
+		
+	};
+	
     $scope.chatsync = function() {
-        var fb = firebase.database().ref().child("writes");
+		
+		var room = $('#room_name').text();
+		
+        var fb = firebase.database().ref().child(room);
         var startListening = function() {
             fb.on('child_added', function(snapshot, prevChildKey) {
                 var data = snapshot.val();

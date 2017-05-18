@@ -54,14 +54,14 @@
 			document.getElementById("mm").style.display = "inline";
         }
 		
-		$("#btn_room_general").click(function(){
-			$('#room_name').html('General');
+		$(document).on("click", "#btn_room_general", function(){
+			  
 		});
 		
-		$("#btn_room_technology").click(function(){
-			$('#room_name').html('Technology');
+		$(document).on("click", "#btn_room_technology", function(){
+			  $('#room_name').html("Technology");
 		});
-
+		
 	</script>
 </head>
 <body onload="blockUINick()">
@@ -79,8 +79,8 @@
 			</div>
 			
 			<div id="rooms_panel">
-				<input type="button" class="btns_rooms" id="btn_room_general" value="General" />
-				<input type="button" class="btns_rooms" id="btn_room_technology" value="Technology" />
+				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
+				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
 				<input type="button" class="btns_rooms" id="btn_room_technology" value="" />
 			
 			</div>
