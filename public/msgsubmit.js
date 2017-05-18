@@ -1,5 +1,6 @@
 var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', function ($scope) {
     $scope.readyToSend = {};
+    $scope.savednick;
     $scope.send = function () {
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var fb = firebase.database();
@@ -8,7 +9,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         updates['/writes/' + key] = $scope.core;
      //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
-		$scope.core = {};
+		$scope.core.msg = "";
     };
 	$scope.send_on_enter = function(keyEvent) {
 	  if (keyEvent.which === 13 && !keyEvent.shiftKey){
@@ -20,7 +21,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
      //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
 		keyEvent.preventDefault();
-		$scope.core = {};
+		$scope.core.msg = "";
 	  }
 	}
 
