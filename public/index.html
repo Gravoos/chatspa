@@ -28,22 +28,33 @@
     <div id="whole_page" ng-controller="chatcore">
 	
         <div class="chatbox">
+			
+			<div id="rooms_panel">
+			
+			
+			
+			</div>
 		
+			
+			<div id="chat_panel">
 			 
-            <div id="boxchat" class="chat_messages" ng-init="chatsync()">
+				<div id="boxchat" class="chat_messages" ng-init="chatsync()">
 
-            </div>
-			
-			
-                <label>
-                    <input type="text" ng-model="core.nick" placeholder="Podaj nick.." />
-                </label>
-                <br>
-                <label>
-                    <input type="text" ng-model="core.msg" placeholder="Napisz wiadomość.." />
-                </label>
-                <input type="button" ng-click="send()" value="Wyślij" />
-                <input type="button" ng-click="clear()" value="Czyść" />
+				</div>
+				
+				
+				<div>
+					<input type="text" ng-model="core.nick" placeholder="Podaj nick.." />
+					</label>
+					<br>
+					<label>
+						<textarea rows="3" cols="70" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
+					</label>
+					<input type="button"  ng-click="send()" value="Wyślij" />
+					<input type="button" ng-click="clear()" value="Czyść" />
+					
+				</div>
+			</div>
         </div>
     </div>
 </body>
