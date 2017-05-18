@@ -28,12 +28,30 @@
 			document.getElementById("addr").style.display = "none";
 			document.getElementById("apic").style.display = "none";
 			document.getElementById("ayt").style.display = "none";
+			
 			var nick_prompt = prompt("Enter your nickname before using chat. :)");
+			var nick_correct = true;
+			
+			if(nick_prompt.length < 4){
+				var nick_correct = false;
+			}
+			
+			while (!nick_correct) {
+				nick_prompt = prompt("Your nickname is too short. Please enter new nickname. ");
+				
+				if(nick_prompt.length < 4){
+					nick_correct = false;
+				} else {
+					nick_correct = true;
+				}
+			
+			}
 			
 			var selectedDueDateField = document.getElementById("nickname_field");
 			var element = angular.element(selectedDueDateField);
 			element.val(nick_prompt);
 			element.triggerHandler('input');
+			
         }
         function multimediaButtons() {
 		    document.getElementById("mm").style.display = "none";

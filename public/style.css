@@ -58,6 +58,8 @@ body {
 	background: #373737;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	color: #fdfdfd;
 	 
 }
 
@@ -96,54 +98,31 @@ textarea:focus{
 	padding: 10px;
 }
 
-.photo_box {
-	width: 80px;
-	height: 100%;
-	background-color: #373737;
-	float: left;
-}
-
-.chat .user_photo{
-	width: 60px;
-	height: 60px;
-	margin-top: 5px;
-	background: #ccc;
-	border-radius: 50%;
-	
-}
-
 #nickname_field {
     border: none;
     outline: none;
     background-color: transparent;
 }
 
-.message_box {
-	width:86%;
-	background-color: #373737;
-	heigh: 100%;
-	color: #f4f4f4;
-	font-family: "Comic Sans MS", cursive, sans-serif;
-	font-size: 11px;
-}
-.chat .user_info {
-	margin: 0px;
+
+.info_box {
+	background-color: green;
 	margin-left: 15px;
-	
+}
+
+.msg_box{
+	background-color: red;
+	margin-top: 10px;
 }
 
 .chat .chat_message {
 	margin: 5px 10px 0;
 	background: #373737;
 	border-radius: 10px;
-	font-size: 13px;
+	font-size: 14px;
 	
 }
 
 .somebody .chat_message {
 	background: #373737;
-}
-
-.self .chat_message {
-	
 }
