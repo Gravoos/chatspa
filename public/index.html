@@ -21,8 +21,23 @@
         firebase.initializeApp(config);
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
-</head>
+	<script>
+		function blockUINick() {
+			document.getElementById("area").disabled = true;
+			document.getElementById("send").disabled = true;
+			document.getElementById("clear").disabled = true;
+        }
+        function unblckUINick() {
+            document.getElementById("nickapply").disabled = true;
+            document.getElementById("nickbutton").disabled = true;
+            document.getElementById("area").disabled = false;
+            document.getElementById("send").disabled = false;
+            document.getElementById("clear").disabled = false;
+        }
 
+	</script>
+</head>
+<body onload="blockUINick()">
 
     <div id="whole_page" ng-controller="chatcore">
 	
@@ -40,14 +55,15 @@
 				<div id="boxchat" class="chat_messages" ng-init="chatsync()">
 				</div>
 				<div>
-					<input type="text" ng-model="core.nick" placeholder="Podaj nick.." />
+					<input id="nickbutton" type="text" ng-model="core.nick" placeholder="Podaj nick.." />
+					<input type="button" id="nickapply" onclick="unblckUINick()" value="OK" />
 					</label>
 					<br>
 					<label>
-						<textarea rows="3" cols="70" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
+						<textarea id="area" rows="3" cols="70" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
-					<input type="button"  ng-click="send()" value="Wyślij" />
-					<input type="button" ng-click="clear()" value="Czyść" />
+					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
+					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
 					
 				</div>
 			</div>
