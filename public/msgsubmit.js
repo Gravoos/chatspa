@@ -4,13 +4,25 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.savednick;
     $scope.send = function() {
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
-        var fb = firebase.database();
-        var key = firebase.database().ref().child('posts').push().key;
-        var updates = {};
-        updates['/writes/' + key] = $scope.core;
-        //   updates['/user-posts/' + uid + '/' + key] = postData;
-        firebase.database().ref().update(updates);
-        $scope.core.msg = "";
+
+			var room = $('#room_name').text();
+            var rgx1 = /<[^>]*>/g;
+			
+			if(rgx1.test($scope.core.msg)){
+				alert("Nie ma scriptow");
+				
+				$scope.core.msg = "";
+				$('#area').val("");
+			} else {
+				var fb = firebase.database();
+				var key = firebase.database().ref().child('posts').push().key;
+				var updates = {};
+				updates['/'+room+'/' + key] = $scope.core;
+				//   updates['/user-posts/' + uid + '/' + key] = postData;
+				firebase.database().ref().update(updates);
+				$('#area').val("");
+				$scope.core.msg = "";
+			}
     };
 	$scope.sendpic = function () {
 		
@@ -143,14 +155,10 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 					var srtime = time.toString().substring(0, 25);
 
 					var cldiv = '<div class="chat somebody">' +
-						'<div class="photo_box">' +
-						'<div class="user_photo"></div>' +
-						'</div>' +
-						'<div class="message_box">' +
-						'<p class="user_info">' + data[key].nick + ', ' +srtime+ '</p>' +
-						'<p class="chat_message">' + data[key].msg + '</p>' +
-						'</div>' +
-						'</div>';
+						'<div class="info_box">' +
+						'<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
+						'<div class="msg_box"><p class="chat_message">' + data[key].msg + '</p>' +
+						'</div></div>';
 
 
 					document.getElementById('boxchat').innerHTML += cldiv;
@@ -208,14 +216,10 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 var srtime = time.toString().substring(0, 25);
 
                 var cldiv = '<div class="chat somebody">' +
-                    '<div class="photo_box">' +
-                    '<div class="user_photo"></div>' +
-                    '</div>' +
-                    '<div class="message_box">' +
-                    '<p class="user_info">' + data.nick + ', ' + srtime + '</p>' +
-                    '<p class="chat_message">' + data.msg + '</p>' +
-                    '</div>' +
-                    '</div>';
+						'<div class="info_box">' +
+						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
+						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
+						'</div></div>';
 
 
                 document.getElementById('boxchat').innerHTML += cldiv;
@@ -237,14 +241,10 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 var srtime = time.toString().substring(0, 25);
 
                 var cldiv = '<div class="chat somebody">' +
-                    '<div class="photo_box">' +
-                    '<div class="user_photo"></div>' +
-                    '</div>' +
-                    '<div class="message_box">' +
-                    '<p class="user_info">' + data.nick + ', ' + srtime + '</p>' +
-                    '<p class="chat_message">' + data.msg + '</p>' +
-                    '</div>' +
-                    '</div>';
+						'<div class="info_box">' +
+						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
+						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
+						'</div></div>';
 
 
                 document.getElementById('boxchat').innerHTML += cldiv;
