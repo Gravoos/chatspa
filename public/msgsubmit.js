@@ -12,6 +12,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.core.msg = "";
     };
 	$scope.sendpic = function () {
+		
+		
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var picaddr = document.getElementById("addr").value;
         $scope.core.msg = '<img width="150" height="150" src="'+picaddr+'">';
@@ -41,6 +43,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         if (keyEvent.which === 13 && !keyEvent.shiftKey) {
             $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
 
+		//	var room = document.getElementById('room_name').value;
+			
             var rgx1 = /<[^>]*>/g;
 			
 			if(rgx1.test($scope.core.msg)){
