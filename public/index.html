@@ -23,16 +23,12 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 	<script>
 		function blockUINick() {
-			document.getElementById("area").disabled = true;
-			document.getElementById("send").disabled = true;
-			document.getElementById("clear").disabled = true;
-        }
-        function unblckUINick() {
-            document.getElementById("nickapply").disabled = true;
-            document.getElementById("nickbutton").disabled = true;
-            document.getElementById("area").disabled = false;
-            document.getElementById("send").disabled = false;
-            document.getElementById("clear").disabled = false;
+			var nick_prompt = prompt("Enter your nickname before using chat. :)");
+			
+			var selectedDueDateField = document.getElementById("nickname_field");
+			var element = angular.element(selectedDueDateField);
+			element.val(nick_prompt);
+			element.triggerHandler('input');
         }
 
 	</script>
@@ -40,24 +36,22 @@
 <body onload="blockUINick()">
     <div id="whole_page" ng-controller="chatcore">
 	
-        <div class="chatbox">
+        <div class="chatbox" >
+			
+			<div id="welcome_box">
+				<span id="weclome_msg">Chatujesz jako: </span>
+					<input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+			</div>
 			
 			<div id="rooms_panel">
 			
 			
-			
 			</div>
-		
 			
 			<div id="chat_panel">
-			 
-				<div id="boxchat" class="chat_messages" ng-init="chatsync()">
+				<div id="boxchat" class="chat_messages" ng-init="chatsync()" >
 				</div>
 				<div>
-					<input id="nickbutton" type="text" ng-model="core.nick" placeholder="Podaj nick.." />
-					<input type="button" id="nickapply" onclick="unblckUINick()" value="OK" />
-					</label>
-					<br>
 					<label>
 						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>

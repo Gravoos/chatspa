@@ -90,6 +90,12 @@ textarea:focus{
 	
 }
 
+#nickname_field {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
 .message_box {
 	width:86%;
 	background-color: #373737;
