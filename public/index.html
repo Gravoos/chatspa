@@ -22,7 +22,7 @@
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
+<body>
 
     <div id="whole_page" ng-controller="chatcore">
 	
@@ -44,7 +44,7 @@
 					</label>
 					<br>
 					<label>
-						<textarea rows="3" cols="70" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
+						<textarea rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
 					<input type="button"  ng-click="send()" value="Wyślij" />
 					<input type="button" ng-click="clear()" value="Czyść" />
