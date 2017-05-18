@@ -53,6 +53,14 @@
 			document.getElementById("ayt").style.display = "none";
 			document.getElementById("mm").style.display = "inline";
         }
+		
+		$("#btn_room_general").click(function(){
+			$('#room_name').html('General');
+		});
+		
+		$("#btn_room_technology").click(function(){
+			$('#room_name').html('Technology');
+		});
 
 	</script>
 </head>
@@ -63,11 +71,17 @@
 			
 			<div id="welcome_box">
 				<span id="weclome_msg">Chatujesz jako: </span>
-					<input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+				<input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+					
+				<center><span id="room_name">General</span><center>
+				
+				
 			</div>
 			
 			<div id="rooms_panel">
-			
+				<input type="button" class="btns_rooms" id="btn_room_general" value="General" />
+				<input type="button" class="btns_rooms" id="btn_room_technology" value="Technology" />
+				<input type="button" class="btns_rooms" id="btn_room_technology" value="" />
 			
 			</div>
 			

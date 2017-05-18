@@ -18,10 +18,32 @@ body {
 	
 	width: 130px;
 	height: 800px;
-	background-color: black;
+	background-color: #292929;
 	float: left;
+		
+}
+
+
+.btns_rooms {
+	
+	height: 50px;
+	width: 110px;
+	border: 1px solid #fdfdfd;
+	background-color: transparent;
+	margin-left: 10px;
+	margin-top: 10px;
+	border-radius: 15px;
+	color: #fdfdfd;
+	
+	outline: 0;
 	
 }
+
+.btns_rooms:active {
+	border: 1px solid black;
+	color: black;
+}
+
 
 #chat_panel {
 	width: 800px;
