@@ -69,6 +69,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     }
     
     $scope.geolock = function () {
+		var room = $('#room_name').text();
 	    function showPosition(position) {
             $scope.core.msg = '<iframe src="https://www.google.com/maps/embed/v1/place?q=' + position.coords.latitude + ',' + position.coords.longitude + '&zoom=15&key=AIzaSyDIA5_XQMB-271M4s0WH-xBei4RpISBJRk"></iframe>';
         }
@@ -79,7 +80,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
-        updates['/writes/' + key] = $scope.core;
+        updates['/'+room+'/' + key] = $scope.core;
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
