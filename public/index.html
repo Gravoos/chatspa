@@ -74,6 +74,7 @@
 			<div id="rooms_panel">
 				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
 				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
+				<input type="button" ng-click="privateView()" class="btns_rooms" id="inbox" value="Private" />
 
 			
 			</div>
@@ -96,6 +97,10 @@
 					</label>
 					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
 					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
+					<br>
+					Adresat: <input type="text" id="target" ng-model="priv.target" /><input type="button" value="Wyślij prywatną wiadomość" ng-click="sendprivate()" />
+					<br>
+					<textarea id="privatearea" rows="3" cols="70" ng-model="priv.pmsg"></textarea>
 
 				</div>
 			</div>

@@ -89,6 +89,36 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.clear = function() {
         $scope.core = {};
     };
+
+	$scope.privateView = function () {
+        $(".somebody").remove();
+        $("#room_name").html("Private");
+        var fb = firebase.database().ref().child('privs');
+        fb.once('value', function (snapshot) {
+            var messages = snapshot.val();
+            for (var msg in messages)
+            {
+                if(messages[msg].target==$scope.core.nick) {
+                    var time = new Date(messages[msg].date);
+                    var srtime = time.toString().substring(0, 25);
+
+                    var insdiv = '<div class="chat somebody">' +
+                        '<div class="photo_box">' +
+                        '<div class="user_photo"></div>' +
+                        '</div>' +
+                        '<div class="message_box">' +
+                        '<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
+                        '<p class="chat_message">' + messages[msg].pmsg + '</p>' +
+                        '</div>' +
+                        '</div>';
+
+                    document.getElementById('boxchat').innerHTML += insdiv;
+                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+                }
+            }
+
+        })
+    }
 	
 	$scope.roomSynch = function(room) {
 		
@@ -139,6 +169,33 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 	};
 	
     $scope.globalinit = function(){
+        var startListeningPrivate = function () {
+            var fb = firebase.database().ref().child('privs');
+
+            fb.on('child_added', function (snapshot, prevChildKey) {
+                var messages = snapshot.val();
+                for (var msg in messages)
+                {
+                    if(messages[msg].target==$scope.core.nick) {
+                        var time = new Date(messages[msg].date);
+                        var srtime = time.toString().substring(0, 25);
+
+                        var insdiv = '<div class="chat somebody">' +
+                            '<div class="photo_box">' +
+                            '<div class="user_photo"></div>' +
+                            '</div>' +
+                            '<div class="message_box">' +
+                            '<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
+                            '<p class="chat_message">' + messages[msg].pmsg + '</p>' +
+                            '</div>' +
+                            '</div>';
+
+                        document.getElementById('boxchat').innerHTML += insdiv;
+                        $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+                    }
+                }
+            })
+        }
 				
 		var startListeningGener = function() {
 		
@@ -199,6 +256,18 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 		
 		startListeningGener();
 		startListeningTech();
+		startListeningPrivate();
 	}
+
+	$scope.sendprivate = function () {
+        $scope.priv.date = firebase.database.ServerValue.TIMESTAMP;
+        $scope.priv.source = $scope.core.nick;
+        var key = firebase.database().ref().child('privs').push().key;
+        var updates = {};
+        updates['/privs/' + key] = $scope.priv;
+        firebase.database().ref().update(updates);
+        $scope.priv.target = "";
+        $scope.priv.pmsg = ""
+    }
     
 }]);
