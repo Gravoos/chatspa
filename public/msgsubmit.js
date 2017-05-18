@@ -130,6 +130,9 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
             }
 
         })
+        $scope.startListeningGener("off");
+        $scope.startListeningTech("off");
+        $scope.startListeningPrivate("on");
     }
 	
 	$scope.roomSynch = function(room) {
@@ -173,13 +176,23 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 			
 			
 	    });
+		if(room=="General")
+        {
+            $scope.startListeningTech("off");
+            $scope.startListeningPrivate("off");
+            $scope.startListeningGener("on");
+        }
+        if(room=="Technology") {
+            $scope.startListeningPrivate("off");
+            $scope.startListeningGener("off");
+            $scope.startListeningTech("on");
+        }
 		
 	};
-	
-    $scope.globalinit = function(){
-        var startListeningPrivate = function () {
-            var fb = firebase.database().ref().child('privs');
 
+        $scope.startListeningPrivate = function (x) {
+            var fb = firebase.database().ref().child('privs');
+            if(x=="on"){
             fb.on('child_added', function (snapshot, prevChildKey) {
                 var messages = snapshot.val();
                 for (var msg in messages)
@@ -202,14 +215,14 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                         $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
                     }
                 }
-            })
+            })}
+            else {fb.off;}
         };
 				
-		var startListeningGener = function() {
+		$scope.startListeningGener = function(x) {
 		
         var fb = firebase.database().ref().child('General');
-		
-        
+        if(x=="on"){
             fb.on('child_added', function(snapshot, prevChildKey) {
                 var data = snapshot.val();
                 var time = new Date(data.date);
@@ -220,44 +233,32 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
 						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
 						'</div></div>';
-
-
                 document.getElementById('boxchat').innerHTML += cldiv;
-
-
                 $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-            })
+            })}
+            else {fb.off;}
         };
 		
 		
-		var startListeningTech = function() {
+		$scope.startListeningTech = function(x) {
 				
         var fb = firebase.database().ref().child('Technology');
-		
-        
+        if(x=="on"){
             fb.on('child_added', function(snapshot, prevChildKey) {
                 var data = snapshot.val();
                 var time = new Date(data.date);
                 var srtime = time.toString().substring(0, 25);
-
                 var cldiv = '<div class="chat somebody">' +
 						'<div class="info_box">' +
 						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
 						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
 						'</div></div>';
-
-
                 document.getElementById('boxchat').innerHTML += cldiv;
-
-
                 $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-            })
+            })}
+            else {fb.off;}
         };
-		
-		startListeningGener();
-		startListeningTech();
-		startListeningPrivate();
-	}
+
 
 	$scope.sendprivate = function () {
         $scope.priv.date = firebase.database.ServerValue.TIMESTAMP;
