@@ -38,7 +38,6 @@
 	</script>
 </head>
 <body onload="blockUINick()">
-
     <div id="whole_page" ng-controller="chatcore">
 	
         <div class="chatbox">
@@ -60,7 +59,7 @@
 					</label>
 					<br>
 					<label>
-						<textarea id="area" rows="3" cols="70" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
+						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
 					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
 					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
