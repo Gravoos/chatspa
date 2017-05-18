@@ -203,7 +203,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                     }
                 }
             })
-        }
+        };
 				
 		var startListeningGener = function() {
 		
