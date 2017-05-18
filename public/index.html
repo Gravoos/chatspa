@@ -75,6 +75,7 @@
 				<div id="boxchat" class="chat_messages" ng-init="chatsync()" >
 				</div>
 				<div>
+					<input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
 					<input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
 					<input type="button" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
 					<input type="button" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
@@ -88,7 +89,7 @@
 					</label>
 					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
 					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
-					
+
 				</div>
 			</div>
         </div>

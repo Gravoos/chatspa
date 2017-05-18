@@ -62,7 +62,24 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 			}
         }
     }
-
+    
+    $scope.geolock = function () {
+	    function showPosition(position) {
+            $scope.core.msg = '<iframe src="https://www.google.com/maps/embed/v1/place?q=' + position.coords.latitude + ',' + position.coords.longitude + '&zoom=15&key=AIzaSyDIA5_XQMB-271M4s0WH-xBei4RpISBJRk"></iframe>';
+        }
+	    
+        $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
+        if(navigator.geolocation){navigator.geolocation.getCurrentPosition(showPosition);}
+        else {alert("Nie można pobrać geolokalizacji");}
+        var fb = firebase.database();
+        var key = firebase.database().ref().child('posts').push().key;
+        var updates = {};
+        updates['/writes/' + key] = $scope.core;
+        //   updates['/user-posts/' + uid + '/' + key] = postData;
+        firebase.database().ref().update(updates);
+        $scope.core.msg = "";
+    }
+    
     $scope.clear = function() {
         $scope.core = {};
     };
