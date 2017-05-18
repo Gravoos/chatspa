@@ -90,13 +90,15 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     };
 	
 	$scope.roomSynch = function(room) {
+		
 		$(".somebody").remove();
+		$("#room_name").html(room);
 		
 		
         var fb = firebase.database().ref().child(room);
 		
 		
-		fb.on("value", function(snapshot, prevChildKey) {
+		fb.once('value', function(snapshot) {
 			  console.log("There are "+snapshot.numChildren()+" messages");
 			
 			
@@ -137,11 +139,17 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 	
     $scope.chatsync = function() {
 		
-		var room = $('#room_name').text();
+		var startListening = function() {
 		
+		
+				var room = $('#room_name').text();
+				
         var fb = firebase.database().ref().child(room);
-        var startListening = function() {
+		
+        
             fb.on('child_added', function(snapshot, prevChildKey) {
+					var room = $('#room_name').text();
+				fb = firebase.database().ref().child(room);
                 var data = snapshot.val();
                 var time = new Date(data.date);
                 var srtime = time.toString().substring(0, 25);
