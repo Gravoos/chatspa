@@ -17,9 +17,11 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var startListening = function () {
             fb.on('child_added', function (snapshot, prevChildKey) {
                 var data = snapshot.val();
-                console.log(data);
+                var time = new Date(data.date);
+                var srtime = time.getHours() + ":" + time.getMinutes() + ":" + time.getHours() + "  " + time.getDay() + "/" + (time.getMonth()+1) +"/" + time.getFullYear();
 
-
+/*
+<<<<<<< HEAD */
 				var cldiv = '<div class="chat somebody">'+
 								'<div class="photo_box">'+
 									'<div class="user_photo"></div>'+
@@ -32,6 +34,12 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 							
 							
                 document.getElementById('boxchat').innerHTML += cldiv;
+				/*
+=======
+                    var cldiv = '<div class="chat somebody"><div class="user_photo"></div><div><p class="user_info">'+data.nick+', '+ srtime +'</p> <p class="chat_message">'+data.msg+' </p></div></div>';
+                        document.getElementById('boxchat').innerHTML += cldiv;
+>>>>>>> 3875dbe46c79327546ddcf27d42b876576987b93
+				*/
 				
 				$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
             })
