@@ -27,7 +27,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.sendyt = function () {
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var ytaddr = document.getElementById("addr").value;
-        $scope.core.msg = '<iframe width="420" height="315" src="'+ytaddr+'" frameborder="0" allowfullscreen></iframe>';
+        var yid = ytaddr.substring(ytaddr.length-11,ytaddr.length);
+        $scope.core.msg = '<iframe width="420" height="315" src="https://www.youtube.com/embed/'+yid+'" frameborder="0" allowfullscreen></iframe>';
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
