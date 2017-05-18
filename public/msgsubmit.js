@@ -245,6 +245,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var fb = firebase.database().ref().child('Technology');
         if(x=="on"){
             fb.on('child_added', function(snapshot, prevChildKey) {
+				
+				console.log($('#room_name').text());
                 var data = snapshot.val();
                 var time = new Date(data.date);
                 var srtime = time.toString().substring(0, 25);
