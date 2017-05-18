@@ -23,11 +23,37 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 		keyEvent.preventDefault();
 		$scope.core.msg = "";
 	  }
-	}
+	};
+	$scope.sendpic = function () {
+        $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
+        var picaddr = document.getElementById("addr").value;
+        $scope.core.msg = '<img width="150" height="150" src="'+picaddr+'">';
+        var fb = firebase.database();
+        var key = firebase.database().ref().child('posts').push().key;
+        var updates = {};
+        updates['/writes/' + key] = $scope.core;
+        //   updates['/user-posts/' + uid + '/' + key] = postData;
+        firebase.database().ref().update(updates);
+        $scope.core.msg = "";
+        document.getElementById("addr").value = "";
+    }
+    $scope.sendyt = function () {
+        $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
+        var ytaddr = document.getElementById("addr").value;
+        $scope.core.msg = '<iframe width="420" height="315" src="'+ytaddr+'" frameborder="0" allowfullscreen></iframe>';
+        var fb = firebase.database();
+        var key = firebase.database().ref().child('posts').push().key;
+        var updates = {};
+        updates['/writes/' + key] = $scope.core;
+        //   updates['/user-posts/' + uid + '/' + key] = postData;
+        firebase.database().ref().update(updates);
+        $scope.core.msg = "";
+        document.getElementById("addr").value = "";
+    }
 
     $scope.clear = function () {
         $scope.core = {};
-    }
+    };
     $scope.chatsync = function () {
         var fb = firebase.database().ref().child("writes");
         var startListening = function () {
@@ -53,7 +79,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 				
 				$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
             })
-        }
+        };
         startListening();
     }
 }]);

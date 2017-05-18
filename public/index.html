@@ -26,6 +26,12 @@
 			document.getElementById("area").disabled = true;
 			document.getElementById("send").disabled = true;
 			document.getElementById("clear").disabled = true;
+			document.getElementById("mm").disabled = true;
+			document.getElementById("pic").style.display = "none";
+			document.getElementById("yt").style.display = "none";
+			document.getElementById("addr").style.display = "none";
+			document.getElementById("apic").style.display = "none";
+			document.getElementById("ayt").style.display = "none";
         }
         function unblckUINick() {
             document.getElementById("nickapply").disabled = true;
@@ -33,6 +39,25 @@
             document.getElementById("area").disabled = false;
             document.getElementById("send").disabled = false;
             document.getElementById("clear").disabled = false;
+            document.getElementById("mm").disabled = false;
+        }
+        function multimediaButtons() {
+		    document.getElementById("mm").style.display = "none";
+		    document.getElementById("pic").style.display = "inline";
+		    document.getElementById("yt").style.display = "inline";
+        }
+        function addElement(x) {
+            document.getElementById("pic").style.display = "none";
+            document.getElementById("yt").style.display = "none";
+            document.getElementById("addr").style.display = "inline";
+            if(x==0){document.getElementById("apic").style.display = "inline";}
+            else {document.getElementById("ayt").style.display = "inline"}
+        }
+        function mlcean() {
+			document.getElementById("addr").style.display = "none";
+			document.getElementById("apic").style.display = "none";
+			document.getElementById("ayt").style.display = "none";
+			document.getElementById("mm").style.display = "inline";
         }
 
 	</script>
@@ -56,6 +81,12 @@
 				<div>
 					<input id="nickbutton" type="text" ng-model="core.nick" placeholder="Podaj nick.." />
 					<input type="button" id="nickapply" onclick="unblckUINick()" value="OK" />
+					<input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
+					<input type="button" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
+					<input type="button" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
+					<input type="text" id="addr" />
+					<input type="button" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
+					<input type="button" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
 					</label>
 					<br>
 					<label>
