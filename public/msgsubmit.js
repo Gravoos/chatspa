@@ -138,19 +138,14 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 		
 	};
 	
-    $scope.chatsync = function() {
-		
-		var startListening = function() {
-		
-		
-				var room = $('#room_name').text();
+    $scope.globalinit = function(){
 				
-        var fb = firebase.database().ref().child(room);
+		var startListeningGener = function() {
+		
+        var fb = firebase.database().ref().child('General');
 		
         
             fb.on('child_added', function(snapshot, prevChildKey) {
-					var room = $('#room_name').text();
-				fb = firebase.database().ref().child(room);
                 var data = snapshot.val();
                 var time = new Date(data.date);
                 var srtime = time.toString().substring(0, 25);
@@ -172,6 +167,38 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
             })
         };
-        startListening();
-    }
+		
+		
+		var startListeningTech = function() {
+				
+        var fb = firebase.database().ref().child('Technology');
+		
+        
+            fb.on('child_added', function(snapshot, prevChildKey) {
+                var data = snapshot.val();
+                var time = new Date(data.date);
+                var srtime = time.toString().substring(0, 25);
+
+                var cldiv = '<div class="chat somebody">' +
+                    '<div class="photo_box">' +
+                    '<div class="user_photo"></div>' +
+                    '</div>' +
+                    '<div class="message_box">' +
+                    '<p class="user_info">' + data.nick + ', ' + srtime + '</p>' +
+                    '<p class="chat_message">' + data.msg + '</p>' +
+                    '</div>' +
+                    '</div>';
+
+
+                document.getElementById('boxchat').innerHTML += cldiv;
+
+
+                $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+            })
+        };
+		
+		startListeningGener();
+		startListeningTech();
+	}
+    
 }]);
