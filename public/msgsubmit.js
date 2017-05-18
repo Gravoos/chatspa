@@ -18,7 +18,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
             fb.on('child_added', function (snapshot, prevChildKey) {
                 var data = snapshot.val();
                 var time = new Date(data.date);
-                var srtime = time.getHours() + ":" + time.getMinutes() + ":" + time.getHours() + "  " + time.getDay() + "/" + (time.getMonth()+1) +"/" + time.getFullYear();
+                var srtime = time.toString().substring(0,25);
 
 
 				var cldiv = '<div class="chat somebody">'+
