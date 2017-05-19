@@ -1,35 +1,35 @@
 var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', function($scope) {
-		
+
     $scope.readyToSend = {};
     $scope.savednick;
     $scope.send = function() {
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
 
-			var room = $('#room_name').text();
-            var rgx1 = /<[^>]*>/g;
-			
-			if(rgx1.test($scope.core.msg)){
-				alert("Nie ma scriptow");
-				
-				$scope.core.msg = "";
-				$('#area').val("");
-			} else {
-				var fb = firebase.database();
-				var key = firebase.database().ref().child('posts').push().key;
-				var updates = {};
-				updates['/'+room+'/' + key] = $scope.core;
-				//   updates['/user-posts/' + uid + '/' + key] = postData;
-				firebase.database().ref().update(updates);
-				$('#area').val("");
-				$scope.core.msg = "";
-			}
+        var room = $('#room_name').text();
+        var rgx1 = /<[^>]*>/g;
+
+        if (rgx1.test($scope.core.msg)) {
+            alert("Nie ma scriptow");
+
+            $scope.core.msg = "";
+            $('#area').val("");
+        } else {
+            var fb = firebase.database();
+            var key = firebase.database().ref().child('posts').push().key;
+            var updates = {};
+            updates['/' + room + '/' + key] = $scope.core;
+            //   updates['/user-posts/' + uid + '/' + key] = postData;
+            firebase.database().ref().update(updates);
+            $('#area').val("");
+            $scope.core.msg = "";
+        }
     };
-	$scope.sendpic = function () {
-		
-		
+    $scope.sendpic = function() {
+
+
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var picaddr = document.getElementById("addr").value;
-        $scope.core.msg = '<img width="150" height="150" src="'+picaddr+'">';
+        $scope.core.msg = '<img width="150" height="150" src="' + picaddr + '">';
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
@@ -39,11 +39,11 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.core.msg = "";
         document.getElementById("addr").value = "";
     }
-    $scope.sendyt = function () {
+    $scope.sendyt = function() {
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var ytaddr = document.getElementById("addr").value;
-        var yid = ytaddr.substring(ytaddr.length-11,ytaddr.length);
-        $scope.core.msg = '<iframe width="420" height="315" src="https://www.youtube.com/embed/'+yid+'" frameborder="0" allowfullscreen></iframe>';
+        var yid = ytaddr.substring(ytaddr.length - 11, ytaddr.length);
+        $scope.core.msg = '<iframe width="420" height="315" src="https://www.youtube.com/embed/' + yid + '" frameborder="0" allowfullscreen></iframe>';
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
@@ -54,63 +54,66 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         document.getElementById("addr").value = "";
     }
     $scope.send_on_enter = function(keyEvent) {
-		
+
         if (keyEvent.which === 13 && !keyEvent.shiftKey) {
             $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
 
-			var room = $('#room_name').text();
+            var room = $('#room_name').text();
             var rgx1 = /<[^>]*>/g;
-			
-			if(rgx1.test($scope.core.msg)){
-				alert("Nie ma scriptow");
-				keyEvent.preventDefault();
-				
-				$scope.core.msg = "";
-			} else {
-				var fb = firebase.database();
-				var key = firebase.database().ref().child('posts').push().key;
-				var updates = {};
-				updates['/'+room+'/' + key] = $scope.core;
-				//   updates['/user-posts/' + uid + '/' + key] = postData;
-				firebase.database().ref().update(updates);
-				keyEvent.preventDefault();
-				
-				$scope.core.msg = "";
-			}
+
+            if (rgx1.test($scope.core.msg)) {
+                alert("Nie ma scriptow");
+                keyEvent.preventDefault();
+
+                $scope.core.msg = "";
+            } else {
+                var fb = firebase.database();
+                var key = firebase.database().ref().child('posts').push().key;
+                var updates = {};
+                updates['/' + room + '/' + key] = $scope.core;
+                //   updates['/user-posts/' + uid + '/' + key] = postData;
+                firebase.database().ref().update(updates);
+                keyEvent.preventDefault();
+
+                $scope.core.msg = "";
+            }
         }
     }
-    
-    $scope.geolock = function () {
-		var room = $('#room_name').text();
-	    function showPosition(position) {
+
+    $scope.geolock = function() {
+        var room = $('#room_name').text();
+
+        function showPosition(position) {
             $scope.core.msg = '<iframe src="https://www.google.com/maps/embed/v1/place?q=' + position.coords.latitude + ',' + position.coords.longitude + '&zoom=15&key=AIzaSyDIA5_XQMB-271M4s0WH-xBei4RpISBJRk"></iframe>';
         }
-	    
+
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
-        if(navigator.geolocation){navigator.geolocation.getCurrentPosition(showPosition);}
-        else {alert("Nie można pobrać geolokalizacji");}
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Nie można pobrać geolokalizacji");
+        }
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
-        updates['/'+room+'/' + key] = $scope.core;
+        updates['/' + room + '/' + key] = $scope.core;
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
     }
-    
+
     $scope.clear = function() {
         $scope.core = {};
     };
 
-	$scope.privateView = function () {
+    $scope.privateView = function() {
         $(".somebody").remove();
         $("#room_name").html("Private");
         var fb = firebase.database().ref().child('privs');
-        fb.once('value', function (snapshot) {
+        fb.once('value', function(snapshot) {
             var messages = snapshot.val();
-            for (var msg in messages)
-            {
-                if(messages[msg].target==$scope.core.nick) {
+            for (var msg in messages) {
+                if (messages[msg].target == $scope.core.nick) {
                     var time = new Date(messages[msg].date);
                     var srtime = time.toString().substring(0, 25);
 
@@ -134,48 +137,45 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.startListeningTech("off");
         $scope.startListeningPrivate("on");
     }
-	
-	$scope.roomSynch = function(room) {
-		
-		$(".somebody").remove();
-		$("#room_name").html(room);
-		
-		
+
+    $scope.roomSynch = function(room) {
+
+        $(".somebody").remove();
+        $("#room_name").html(room);
+
+
         var fb = firebase.database().ref().child(room);
-		
-		
-		fb.once('value', function(snapshot) {
-			  console.log("There are "+snapshot.numChildren()+" messages");
-			
-			
-				var data = snapshot.val();
-				console.log(data);
-				
-				
-				for (var key in data){
-					console.log(data[key].nick);
-					var time = new Date(data[key].date);
-					var srtime = time.toString().substring(0, 25);
-
-					var cldiv = '<div class="chat somebody">' +
-						'<div class="info_box">' +
-						'<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
-						'<div class="msg_box"><p class="chat_message">' + data[key].msg + '</p>' +
-						'</div></div>';
+        fb.once('value', function(snapshot) {
+            console.log("There are " + snapshot.numChildren() + " messages");
 
 
-					document.getElementById('boxchat').innerHTML += cldiv;
+            var data = snapshot.val();
+            console.log(data);
 
 
-					$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-				}
-					
-					
-				
-			
-			
-			
-	    });
+            for (var key in data) {
+                console.log(data[key].nick);
+                var time = new Date(data[key].date);
+                var srtime = time.toString().substring(0, 25);
+
+                var cldiv = '<div class="chat somebody">' +
+                    '<div class="info_box">' +
+                    '<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
+                    '<div class="msg_box"><p class="chat_message">' + data[key].msg + '</p>' +
+                    '</div></div>';
+
+
+                document.getElementById('boxchat').innerHTML += cldiv;
+
+
+                $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+            }
+
+
+
+
+        });
+        /*
 		if(room=="General")
         {
             $scope.startListeningTech("off");
@@ -187,82 +187,106 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
             $scope.startListeningGener("off");
             $scope.startListeningTech("on");
         }
-		
-	};
+		*/
+    };
+    /*
+    	$scope.globalInit =  function(){
+    		$scope.startListeningPrivate = function(x) {
+    			var fb = firebase.database().ref().child('privs');
+    			if (x == "on") {
+    				fb.on('child_added', function(snapshot, prevChildKey) {
+    					var messages = snapshot.val();
+    					for (var msg in messages) {
+    						if (messages[msg].target == $scope.core.nick) {
+    							var time = new Date(messages[msg].date);
+    							var srtime = time.toString().substring(0, 25);
 
-        $scope.startListeningPrivate = function (x) {
-            var fb = firebase.database().ref().child('privs');
-            if(x=="on"){
-            fb.on('child_added', function (snapshot, prevChildKey) {
-                var messages = snapshot.val();
-                for (var msg in messages)
-                {
-                    if(messages[msg].target==$scope.core.nick) {
-                        var time = new Date(messages[msg].date);
-                        var srtime = time.toString().substring(0, 25);
+    							var insdiv = '<div class="chat somebody">' +
+    								'<div class="photo_box">' +
+    								'<div class="user_photo"></div>' +
+    								'</div>' +
+    								'<div class="message_box">' +
+    								'<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
+    								'<p class="chat_message">' + messages[msg].pmsg + '</p>' +
+    								'</div>' +
+    								'</div>';
 
-                        var insdiv = '<div class="chat somebody">' +
-                            '<div class="photo_box">' +
-                            '<div class="user_photo"></div>' +
-                            '</div>' +
-                            '<div class="message_box">' +
-                            '<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
-                            '<p class="chat_message">' + messages[msg].pmsg + '</p>' +
-                            '</div>' +
-                            '</div>';
+    							document.getElementById('boxchat').innerHTML += insdiv;
+    							$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+    						}
+    					}
+    				})
+    			}
+    		};
+    */
+    $scope.globalinit = function() {
 
-                        document.getElementById('boxchat').innerHTML += insdiv;
-                        $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-                    }
+        var startListeningGener = function() {
+
+            var fb = firebase.database().ref().child('General');
+
+
+            fb.on('child_added', function(snapshot, prevChildKey) {
+
+                var roomCheck = $('#room_name').text();
+
+                if (roomCheck == 'General') {
+
+                    var data = snapshot.val();
+                    var time = new Date(data.date);
+                    var srtime = time.toString().substring(0, 25);
+
+                    var cldiv = '<div class="chat somebody">' +
+                    '<div class="info_box">' +
+                    '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
+                    '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
+                    '</div></div>';
+
+
+                    document.getElementById('boxchat').innerHTML += cldiv;
+
+
+                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
                 }
-            })}
-            else {fb.off;}
+            })
         };
-				
-		$scope.startListeningGener = function(x) {
-		
-        var fb = firebase.database().ref().child('General');
-        if(x=="on"){
+
+
+        var startListeningTech = function() {
+
+            var fb = firebase.database().ref().child('Technology');
+
+
             fb.on('child_added', function(snapshot, prevChildKey) {
-                var data = snapshot.val();
-                var time = new Date(data.date);
-                var srtime = time.toString().substring(0, 25);
 
-                var cldiv = '<div class="chat somebody">' +
-						'<div class="info_box">' +
-						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
-						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
-						'</div></div>';
-                document.getElementById('boxchat').innerHTML += cldiv;
-                $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-            })}
-            else {fb.off;}
-        };
-		
-		
-		$scope.startListeningTech = function(x) {
-				
-        var fb = firebase.database().ref().child('Technology');
-        if(x=="on"){
-            fb.on('child_added', function(snapshot, prevChildKey) {
-				
-				console.log($('#room_name').text());
-                var data = snapshot.val();
-                var time = new Date(data.date);
-                var srtime = time.toString().substring(0, 25);
-                var cldiv = '<div class="chat somebody">' +
-						'<div class="info_box">' +
-						'<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' +srtime+ '</span> </div>'+
-						'<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
-						'</div></div>';
-                document.getElementById('boxchat').innerHTML += cldiv;
-                $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-            })}
-            else {fb.off;}
+                var roomCheck = $('#room_name').text();
+
+                if (roomCheck == 'Technology') {
+
+                    var data = snapshot.val();
+                    var time = new Date(data.date);
+                    var srtime = time.toString().substring(0, 25);
+
+                    var cldiv = '<div class="chat somebody">' +
+                    '<div class="info_box">' +
+                    '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
+                    '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
+                    '</div></div>';
+
+
+                    document.getElementById('boxchat').innerHTML += cldiv;
+
+
+                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+                }
+            })
         };
 
+        startListeningGener();
+        startListeningTech();
+    }
 
-	$scope.sendprivate = function () {
+    $scope.sendprivate = function() {
         $scope.priv.date = firebase.database.ServerValue.TIMESTAMP;
         $scope.priv.source = $scope.core.nick;
         var key = firebase.database().ref().child('privs').push().key;
@@ -272,5 +296,5 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.priv.target = "";
         $scope.priv.pmsg = ""
     }
-    
+
 }]);
