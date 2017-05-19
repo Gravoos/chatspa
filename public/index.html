@@ -8,7 +8,6 @@
     <script src="msgsubmit.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="jquery.blockUI.js"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -146,8 +145,9 @@
 		<input type="text" id="enter_nick_field" />
 		<input type="button" id="btn_submit_nick" value="Zatwierdź"/>
 	</div>
-	
+
     <div id="whole_page" class="overlay" ng-controller="chatcore">
+
 
         <div class="chatbox">
 
@@ -185,6 +185,7 @@
                     <label>
 						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
+
                     <input id="send" type="button" ng-click="send()" value="Wyślij" />
                     <input id="clear" type="button" ng-click="clear()" value="Czyść" />
                     <br> Adresat: <input type="text" id="target" ng-model="priv.target" /><input type="button" value="Wyślij prywatną wiadomość" ng-click="sendprivate()" />
@@ -193,6 +194,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 </body>
