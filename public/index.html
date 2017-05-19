@@ -202,26 +202,24 @@
 				<div id="boxchat" class="chat_messages" ng-init="roomSynch('General')"></div>
 				
 				
-				<div>
-					<input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
-					<input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
-					<input type="button" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
-					<input type="button" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
+				<div id="chatting_tools_box">
+					<input type="button"  class="btns_tool_box" id="geo" ng-click="geolock()" value="Show location">
+					<input type="button" class="btns_tool_box" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
+					<input type="button" class="btns_tool_box" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
+					<input type="button" class="btns_tool_box" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
 					<input type="text" id="addr" />
-					<input type="button" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
-					<input type="button" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
-					<input type="button" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego: " />
+					<input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
+					<input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
+					<input type="button" class="btns_tool_box" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego" />
 					<input type="text" id="idprivate" ng-model="priv.name" />
 					</label>
 					<br>
-					<label>
-						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
-					</label>
-
-                    <input id="send" type="button" ng-click="send()" value="Wyślij" />
-                    <input id="clear" type="button" ng-click="clear()" value="Czyść" />
-                    
-
+					
+					<div>
+						<textarea id="write_message" id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
+						<input class="btns_tool_box"  id="send" type="button" ng-click="send()" value="Send" />
+						<input class="btns_tool_box" id="clear" type="button" ng-click="clear()" value="Clear" />
+					</div>
                 </div>
             </div>
 

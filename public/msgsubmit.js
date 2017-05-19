@@ -125,7 +125,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 
     $scope.roomSynch = function(room) {
 
-        $(".somebody").remove();
+        $(".chat").remove();
         $("#room_name").html(room);
 
 
@@ -143,11 +143,15 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 var time = new Date(data[key].date);
                 var srtime = time.toString().substring(0, 25);
 
-                var cldiv = '<div class="chat somebody">' +
-                    '<div class="info_box">' +
-                    '<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
-                    '<div class="msg_box"><p class="chat_message">' + data[key].msg + '</p>' +
-                    '</div></div>';
+                var cldiv = '<div class="chat">' +
+									'<div class="info_box">' +
+										'<span class="user_nick">' + data.nick + '</span>'+
+										'<span class="msg_time">'+ srtime + '</span>' +
+									'</div>' +
+									'<div class="msg_box">'+
+										'<p class="chat_message">' + data.msg + '</p>' +
+									'</div>'+
+								'</div>';
 
 
                 document.getElementById('boxchat').innerHTML += cldiv;
@@ -183,11 +187,15 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                     var time = new Date(data.date);
                     var srtime = time.toString().substring(0, 25);
 
-                    var cldiv = '<div class="chat somebody">' +
-                        '<div class="info_box">' +
-                        '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
-                        '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
-                        '</div></div>';
+                    var cldiv = '<div class="chat">' +
+									'<div class="info_box">' +
+										'<span class="user_nick">' + data.nick + '</span>'+
+										'<span class="msg_time">'+ srtime + '</span>' +
+									'</div>' +
+									'<div class="msg_box">'+
+										'<p class="chat_message">' + data.msg + '</p>' +
+									'</div>'+
+								'</div>';
 
 
                     document.getElementById('boxchat').innerHTML += cldiv;

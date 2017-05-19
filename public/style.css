@@ -37,8 +37,9 @@ body {
 
 #chat_panel {
 	width: 800px;
-	height: 800px;
-	background-color: #5e5e5e;
+	height: 835px;
+	background-color: #6d6d6d; /*#5e5e5e;*/
+	
 	
 }
 
@@ -66,7 +67,7 @@ body {
 #rooms_panel {
 	
 	width: 140px;
-	height: 800px;
+	height: 835px;
 	background-color: #292929;
 	float: left;
 	overflow-x: hidden;
@@ -86,12 +87,14 @@ body {
 
 
 textarea {
+	margin-bottom: 0px;
     resize: none;
 	border: 1px solid #c5c5c5;
 	background-color: #373737;
 	color: #f4f4f4;
 	font-family: "Comic Sans MS", cursive, sans-serif;
 	font-size: 11px;
+	float: left;
 	
 }
 
@@ -103,12 +106,28 @@ textarea:focus{
 
 .chat{
 	background-color: #373737;
-	display: flex;
-	flex-flow: row wrap;
-	align-items: flex-start;
-	border-bottom: 1px solid grey; 
-	padding: 10px;
+	border-bottom: 1px solid #787878;
 }
+
+
+.msg_box{
+	background-color: #373737;
+	font-size: 13px;
+}
+
+.user_nick {
+	padding-left: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.msg_time {
+	padding-left: 5px;
+	font-size: 9px;
+	
+}
+
+
 
 #nickname_field {
     border: none;
@@ -116,28 +135,6 @@ textarea:focus{
     background-color: transparent;
 }
 
-
-.info_box {
-	background-color: green;
-	margin-left: 15px;
-}
-
-.msg_box{
-	background-color: red;
-	margin-top: 10px;
-}
-
-.chat .chat_message {
-	margin: 5px 10px 0;
-	background: #373737;
-	border-radius: 10px;
-	font-size: 14px;
-	
-}
-
-.somebody .chat_message {
-	background: #373737;
-}
 
 #disablingDiv
 {
@@ -154,6 +151,43 @@ textarea:focus{
     background-color: white; 
 }
 
+.btns_tool_box {
+	margin-top: 3px;
+	margin-left: 3px;
+	background-color: #303030; 
+	border: 1px solid white;
+	border-radius: 10px;
+    cursor: pointer;      
+	color: #fdfdfd;	
+    vertical-align: middle; 
+    height: 36px;  
+}
 
+#geo{	
+    background-image: url(location.png);     
+    background-repeat: no-repeat; 
+    background-position: 0px 0px;          
+    padding-left: 36px;     
+}
 
+#chatting_tools_box {
+	background-color: #6d6d6d;
+}
 
+#write_message {
+	margin-top: 3px;
+	margin-left: 3px;
+}
+
+#send {
+	float: left;
+	position: relative;
+	margin-top: 10px;
+	margin-left: 8px;
+}
+
+#clear {
+	float: left;
+	margin-top: 10px;
+	margin-left: 8px;
+}
