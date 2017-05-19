@@ -186,14 +186,14 @@
             </div>
 
             <div id="rooms_panel">
-			
+				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
+				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
 			</div>
 			
 			<div id="chat_panel">
-				<div id="boxchat" class="chat_messages" ng-init="roomSynch('General')">
-				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
-				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
-				</div>
+				<div id="boxchat" class="chat_messages" ng-init="roomSynch('General')"></div>
+				
+				
 				<div>
 					<input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
 					<input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
