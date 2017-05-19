@@ -1,4 +1,5 @@
 var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', '$compile', function($scope,$compile) {
+    $scope.existingRooms = ['General','Technology'];
     $scope.readyToSend = {};
     $scope.savednick;
     $scope.send = function() {
@@ -101,10 +102,21 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.core.msg = "";
     }
 
+
+
     $scope.createRoom = function () {
-        var ind = '<input type="button" ng-click="roomSynch(\''+$scope.priv.name+'\')" class="btns_rooms" id="btn_room_'+$scope.priv.name+'" value="'+$scope.priv.name+'" />';
-        var tmp = $compile(ind)($scope);
-        angular.element(document.getElementById("rooms_panel")).append(tmp);
+        var isRoomAlreadyCreated = false;
+        for (var r in $scope.existingRooms)
+        {
+            if($scope.existingRooms[r]==$scope.priv.name)isRoomAlreadyCreated = true;
+        }
+        if(isRoomAlreadyCreated){
+            alert("Ta nazwa jest już zajęta");
+        }else {
+            var ind = '<input type="button" ng-click="roomSynch(\'' + $scope.priv.name + '\')" class="btns_rooms" id="btn_room_' + $scope.priv.name + '" value="' + $scope.priv.name + '" />';
+            var tmp = $compile(ind)($scope);
+            angular.element(document.getElementById("rooms_panel")).append(tmp);
+        }
     }
 
     $scope.clear = function() {
