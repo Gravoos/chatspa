@@ -126,47 +126,8 @@
             document.getElementById("ayt").style.display = "none";
             document.getElementById("mm").style.display = "inline";
         }
-
-
-    /*    window.onbeforeunload = function() {
-			var ref = firebase.database().ref().child('users');
-				
-			var n = $('#nickname_field').val();
-			console.log(n);
-			
-				
-			ref.orderByChild('username').equalTo(n).once('value').then(function(snapshot) {
-				snapshot.forEach(function(childSnapshot) {
-					//remove each child
-					ref.child(childSnapshot.key).remove();
-				});
-			});
-			
-			return ;
-			
-        }
-  */		
 		
-		/*
 		
-		$(window).bind('onbeforeunload', function () {
-
-			var ref = firebase.database().ref().child('users');
-				
-			var n = $('#nickname_field').val();
-			console.log(n);
-			
-				
-			ref.orderByChild('username').equalTo(n).once('value').then(function(snapshot) {
-				snapshot.forEach(function(childSnapshot) {
-					//remove each child
-					ref.child(childSnapshot.key).remove();
-				});
-			});
-
-		});
-		
-		*/
 		$(window).on('beforeunload', function (e) {
 			if (e.originalEvent) {
 			var ref = firebase.database().ref().child('users');
@@ -197,20 +158,6 @@
 
 
 
-        $(document).ready(function() {
-            $("#test").click(function() {
-                var ref = firebase.database().ref().child('users');
-				
-				
-                ref.orderByChild('username').equalTo('penis')
-                    .once('value').then(function(snapshot) {
-                        snapshot.forEach(function(childSnapshot) {
-                            //remove each child
-                            ref.child(childSnapshot.key).remove();
-                        });
-                    });
-            });
-        });
     </script>
 </head>
 
@@ -240,7 +187,6 @@
 
             <div id="rooms_panel">
 			
-        <input type="button" id="test" value="Zatwierdź" />
                 <input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
                 <input type="button" ng-click="roomSynch('Technology')" class="btns_rooms" id="btn_room_technology" value="Technology" />
                 <input type="button" ng-click="privateView()" class="btns_rooms" id="inbox" value="Private" />
