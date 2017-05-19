@@ -97,7 +97,7 @@
 			</div>
 			
 			<div id="chat_panel">
-				<div id="boxchat" class="chat_messages" ng-init='globalinit()' >
+				<div id="boxchat" class="chat_messages" ng-init="roomSynch('General')">
 				</div>
 				<div>
 					<input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
@@ -107,6 +107,8 @@
 					<input type="text" id="addr" />
 					<input type="button" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
 					<input type="button" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
+					<input type="button" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego: " />
+					<input type="text" id="idprivate" ng-model="priv.name" />
 					</label>
 					<br>
 					<label>

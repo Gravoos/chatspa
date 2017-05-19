@@ -1,5 +1,4 @@
-var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', function($scope) {
-
+var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', '$compile', function($scope,$compile) {
     $scope.readyToSend = {};
     $scope.savednick;
     $scope.send = function() {
@@ -102,6 +101,12 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         $scope.core.msg = "";
     }
 
+    $scope.createRoom = function () {
+        var ind = '<input type="button" ng-click="roomSynch(\''+$scope.priv.name+'\')" class="btns_rooms" id="btn_room_'+$scope.priv.name+'" value="'+$scope.priv.name+'" />';
+        var tmp = $compile(ind)($scope);
+        angular.element(document.getElementById("rooms_panel")).append(tmp);
+    }
+
     $scope.clear = function() {
         $scope.core = {};
     };
@@ -143,6 +148,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 
 
         });
+        $scope.startListeningAny(room);
         /*
 		if(room=="General")
         {
@@ -187,7 +193,44 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     			}
     		};
     */
+    $scope.runningIntents = [];
+
+    $scope.startListeningAny = function (ident) {
+        var alreadyRunning = false;
+        for (var i in $scope.runningIntents)
+        {
+            if(ident==$scope.runningIntents[i]){alreadyRunning=true;}
+        }
+
+
+        var fb = firebase.database().ref().child(ident);
+        if(alreadyRunning==false) {
+            $scope.runningIntents.push(ident);
+            fb.on('child_added', function (snapshot, prevChildKey) {
+                var currentRoom = $('#room_name').text();
+                if (currentRoom == ident) {
+                    var data = snapshot.val();
+                    var time = new Date(data.date);
+                    var srtime = time.toString().substring(0, 25);
+
+                    var cldiv = '<div class="chat somebody">' +
+                        '<div class="info_box">' +
+                        '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
+                        '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
+                        '</div></div>';
+
+
+                    document.getElementById('boxchat').innerHTML += cldiv;
+
+
+                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+                }
+            })
+        }
+    }
+
     $scope.globalinit = function() {
+
 
         var startListeningGener = function() {
 
