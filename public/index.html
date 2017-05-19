@@ -126,38 +126,34 @@
             document.getElementById("ayt").style.display = "none";
             document.getElementById("mm").style.display = "inline";
         }
-		
-		
-		$(window).on('beforeunload', function (e) {
-			if (e.originalEvent) {
-			var ref = firebase.database().ref().child('users');
-				
-			var n = $('#nickname_field').val();
-			console.log(n);
-			
-				
-			ref.orderByChild('username').equalTo(n).once('value').then(function(snapshot) {
-				snapshot.forEach(function(childSnapshot) {
-					//remove each child
-					ref.child(childSnapshot.key).remove();
-				});
-			});
-			
-			}		
-			else $.get("", {
-				async: false
-			});
-			$(this).trigger('beforeunload');
-		});
+
+
+        $(window).on('beforeunload', function(e) {
+            if (e.originalEvent) {
+                var ref = firebase.database().ref().child('users');
+
+                var n = $('#nickname_field').val();
+                console.log(n);
+
+
+                ref.orderByChild('username').equalTo(n).once('value').then(function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        //remove each child
+                        ref.child(childSnapshot.key).remove();
+                    });
+                });
+
+            } else $.get("", {
+                async: false
+            });
+            $(this).trigger('beforeunload');
+        });
 
         $(function() {
             $('input[type="checkbox"]').click(function() {
                 window.onbeforeunload = function() {};
             });
         });
-
-
-
     </script>
 </head>
 
@@ -176,50 +172,47 @@
         <div class="chatbox">
 
             <div id="welcome_box">
-                <span id="weclome_msg">Chatujesz jako: </span>
-                <input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+                <input class="nn" id="nickname_field" type="text" ng-model="core.nick" readonly/>
 
-                <center><span id="room_name">General</span>
-                    <center>
-
+                <center><span id="room_name">General</span></center>
 
             </div>
 
             <div id="rooms_panel">
-				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
-				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />				
-				<input type="button" ng-click="roomSynch('Games')"class="btns_rooms" id="btn_room_games" value="Games" />				
-				<input type="button" ng-click="roomSynch('Politics')"class="btns_rooms" id="btn_room_politics" value="Politics" />						
-				<input type="button" ng-click="roomSynch('Sport')"class="btns_rooms" id="btn_room_sport" value="Sport" />				
-				<input type="button" ng-click="roomSynch('Motorization ')"class="btns_rooms" id="btn_room_motorization " value="Motorization " />				
-				<input type="button" ng-click="roomSynch('Tourism')"class="btns_rooms" id="btn_room_tourism" value="Tourism" />				
-				<input type="button" ng-click="roomSynch('Languages')"class="btns_rooms" id="btn_room_languages" value="Languages" />
-				<input type="button" ng-click="roomSynch('Feelings')"class="btns_rooms" id="btn_room_feelings" value="Feelings" />
-				
-			</div>
-			
-			<div id="chat_panel">
-				<div id="boxchat" class="chat_messages" ng-init="roomSynch('General')"></div>
-				
-				
-				<div id="chatting_tools_box">
-					<input type="button"  class="btns_tool_box" id="geo" ng-click="geolock()" value="Show location">
-					<input type="button" class="btns_tool_box" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
-					<input type="button" class="btns_tool_box" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
-					<input type="button" class="btns_tool_box" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
-					<input type="text" id="addr" />
-					<input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
-					<input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
-					<input type="button" class="btns_tool_box" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego" />
-					<input type="text" id="idprivate" ng-model="priv.name" />
-					</label>
-					<br>
-					
-					<div>
-						<textarea id="write_message" id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
-						<input class="btns_tool_box"  id="send" type="button" ng-click="send()" value="Send" />
-						<input class="btns_tool_box" id="clear" type="button" ng-click="clear()" value="Clear" />
-					</div>
+                <input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
+                <input type="button" ng-click="roomSynch('Technology')" class="btns_rooms" id="btn_room_technology" value="Technology" />
+                <input type="button" ng-click="roomSynch('Games')" class="btns_rooms" id="btn_room_games" value="Games" />
+                <input type="button" ng-click="roomSynch('Politics')" class="btns_rooms" id="btn_room_politics" value="Politics" />
+                <input type="button" ng-click="roomSynch('Sport')" class="btns_rooms" id="btn_room_sport" value="Sport" />
+                <input type="button" ng-click="roomSynch('Motorization ')" class="btns_rooms" id="btn_room_motorization " value="Motorization " />
+                <input type="button" ng-click="roomSynch('Tourism')" class="btns_rooms" id="btn_room_tourism" value="Tourism" />
+                <input type="button" ng-click="roomSynch('Languages')" class="btns_rooms" id="btn_room_languages" value="Languages" />
+                <input type="button" ng-click="roomSynch('Feelings')" class="btns_rooms" id="btn_room_feelings" value="Feelings" />
+
+            </div>
+
+            <div id="chat_panel">
+                <div id="boxchat" class="chat_messages" ng-init="roomSynch('General')"></div>
+
+
+                <div id="chatting_tools_box">
+                    <input type="button" class="btns_tool_box" id="geo" ng-click="geolock()" value="Show location">
+                    <input type="button" class="btns_tool_box" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
+                    <input type="button" class="btns_tool_box" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
+                    <input type="button" class="btns_tool_box" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
+                    <input type="text" id="addr" />
+                    <input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
+                    <input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
+                    <input type="button" class="btns_tool_box" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego" />
+                    <input type="text" id="idprivate" ng-model="priv.name" />
+                    </label>
+                    <br>
+
+                    <div>
+                        <textarea id="write_message" id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.."></textarea>
+                        <input class="btns_tool_box" id="send" type="button" ng-click="send()" value="Send" />
+                        <input class="btns_tool_box" id="clear" type="button" ng-click="clear()" value="Clear" />
+                    </div>
                 </div>
             </div>
 

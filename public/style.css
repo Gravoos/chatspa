@@ -1,8 +1,13 @@
 body {
-	background-color: #f4f4f4;
+	background-color: #d6d6d6;
 	
 }
 
+
+#welcome_box{
+	
+	background-color: #5c5c5c;
+}
 
 .chatbox{
 	background-color: white;
@@ -23,8 +28,8 @@ body {
 	margin-left: 10px;
 	margin-top: 10px;
 	border-radius: 15px;
-	color: #fdfdfd;
-	
+	color: #fdfdfd;	
+    cursor: pointer; 
 	outline: 0;
 	
 }
@@ -38,9 +43,24 @@ body {
 #chat_panel {
 	width: 800px;
 	height: 835px;
-	background-color: #6d6d6d; /*#5e5e5e;*/
+	background-color: #5c5c5c; /*#5e5e5e;*/
 	
 	
+}
+
+#room_name {
+	font-size: 30px;
+	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	color: #f2f2f2;
+}
+
+.nn {
+	margin-left: 15px;
+	margin-top: 15px;
+	font-weight: bold;
+	
+	color: #E1FBCE;
 }
 
 .chat_messages {
@@ -160,7 +180,13 @@ textarea:focus{
     cursor: pointer;      
 	color: #fdfdfd;	
     vertical-align: middle; 
-    height: 36px;  
+    height: 36px;  	
+	outline: 0;
+}
+
+.btns_tool_box:active {
+	border: 1px solid black;
+	color: black;
 }
 
 #geo{	
@@ -171,7 +197,7 @@ textarea:focus{
 }
 
 #chatting_tools_box {
-	background-color: #6d6d6d;
+	background-color: #5c5c5c;
 }
 
 #write_message {
