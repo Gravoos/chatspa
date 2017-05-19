@@ -7,7 +7,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="msgsubmit.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="jquery.blockUI.js"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -21,107 +22,177 @@
         firebase.initializeApp(config);
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
-	<script>
-		function blockUINick() {
+    <script>
+		function blockUINick() { 
 			document.getElementById("pic").style.display = "none";
-			document.getElementById("yt").style.display = "none";
-			document.getElementById("addr").style.display = "none";
-			document.getElementById("apic").style.display = "none";
-			document.getElementById("ayt").style.display = "none";
+            document.getElementById("yt").style.display = "none";
+            document.getElementById("addr").style.display = "none";
+            document.getElementById("apic").style.display = "none";
+            document.getElementById("ayt").style.display = "none";
+		
+			document.getElementById('disablingDiv').style.display='block';
+	
+			var fb = firebase.database().ref().child('users');
 			
-			var nick_prompt = prompt("Enter your nickname before using chat. :)");
-			var nick_correct = true;
+			$('document').ready(function(){
+				$('#btn_submit_nick').click(function(){
+					var nickname = $('#enter_nick_field').val();
+
+					fb.once('value', function(snapshot) {
+
+						console.log("There are " + snapshot.numChildren() + " users");
+
+						var data = snapshot.val();
+						
+						var valid = true;
+						
+						if(!validate_length(nickname)){
+							$('#info_on_disabling_div').text('Username is too short');
+						} else {
+							for (var key in data) {
+								console.log(data[key].username +' - '+ nickname);
+								if(nickname == data[key].username){
+									$('#info_on_disabling_div').text('Username is already taken.');
+									valid = false;
+									break;
+								} 
+							}
+							
+							if(valid){
+								writeUserData(nickname);
+								document.getElementById('disablingDiv').style.display='none';
+								
+								var selectedDueDateField = document.getElementById("nickname_field");
+								var element = angular.element(selectedDueDateField);
+								element.val(nickname);
+								element.triggerHandler('input');
+							}
+						
+						}
+					
+					});
 			
-			if(nick_prompt.length < 4){
-				var nick_correct = false;
-			}
-			
-			while (!nick_correct) {
-				nick_prompt = prompt("Your nickname is too short. Please enter new nickname. ");
+				})
 				
-				if(nick_prompt.length < 4){
-					nick_correct = false;
-				} else {
-					nick_correct = true;
-				}
-			
-			}
-			
-			var selectedDueDateField = document.getElementById("nickname_field");
-			var element = angular.element(selectedDueDateField);
-			element.val(nick_prompt);
-			element.triggerHandler('input');
-			
+				$('#enter_nick_field').keypress(function(e){
+					if(e.which == 13){//Enter key pressed
+						
+						 $('#btn_submit_nick').click();
+					}
+				});
+			});
         }
+		
+		
+		function validate_length(n){
+			var valid = false;
+			
+			if (n.length < 4) {
+				valid = false;
+			} else {
+				valid = true;
+			}			
+			
+			return valid;
+		}		
+		
+		
+        function writeUserData(name) {
+            firebase.database().ref('users/').push({
+                username: name
+            });
+        }
+
+
         function multimediaButtons() {
-		    document.getElementById("mm").style.display = "none";
-		    document.getElementById("pic").style.display = "inline";
-		    document.getElementById("yt").style.display = "inline";
+            document.getElementById("mm").style.display = "none";
+            document.getElementById("pic").style.display = "inline";
+            document.getElementById("yt").style.display = "inline";
         }
+
         function addElement(x) {
             document.getElementById("pic").style.display = "none";
             document.getElementById("yt").style.display = "none";
             document.getElementById("addr").style.display = "inline";
-            if(x==0){document.getElementById("apic").style.display = "inline";}
-            else {document.getElementById("ayt").style.display = "inline"}
+            if (x == 0) {
+                document.getElementById("apic").style.display = "inline";
+            } else {
+                document.getElementById("ayt").style.display = "inline"
+            }
         }
-        function mlcean() {
-			document.getElementById("addr").style.display = "none";
-			document.getElementById("apic").style.display = "none";
-			document.getElementById("ayt").style.display = "none";
-			document.getElementById("mm").style.display = "inline";
-        }
-		
-		
-	</script>
-</head>
-<body onload="blockUINick()">
-    <div id="whole_page" ng-controller="chatcore">
-	
-        <div class="chatbox" >
-			
-			<div id="welcome_box">
-				<span id="weclome_msg">Chatujesz jako: </span>
-				<input id="nickname_field" type="text" ng-model="core.nick" readonly/>
-					
-				<center><span id="room_name">General</span><center>
-				
-				
-			</div>
-			
-			<div id="rooms_panel">
-				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
-				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
-				<input type="button" ng-click="privateView()" class="btns_rooms" id="inbox" value="Private" />
 
-			
-			</div>
-			
-			<div id="chat_panel">
-				<div id="boxchat" class="chat_messages" ng-init='globalinit()' >
-				</div>
-				<div>
-					<input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
-					<input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
-					<input type="button" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
-					<input type="button" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
-					<input type="text" id="addr" />
-					<input type="button" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
-					<input type="button" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
-					</label>
-					<br>
-					<label>
+        function mlcean() {
+            document.getElementById("addr").style.display = "none";
+            document.getElementById("apic").style.display = "none";
+            document.getElementById("ayt").style.display = "none";
+            document.getElementById("mm").style.display = "inline";
+        }
+
+
+        window.onbeforeunload = function() {}
+
+        $(function() {
+            $('input[type="checkbox"]').click(function() {
+                window.onbeforeunload = function() {};
+            });
+        });
+    </script>
+</head>
+
+<body onload="blockUINick()">
+
+	<div id="disablingDiv" >
+		<p id="info_on_disabling_div">Enter your nickname: </p>
+		<input type="text" id="enter_nick_field" />
+		<input type="button" id="btn_submit_nick" value="Zatwierdź"/>
+	</div>
+	
+    <div id="whole_page" class="overlay" ng-controller="chatcore">
+
+        <div class="chatbox">
+
+            <div id="welcome_box">
+                <span id="weclome_msg">Chatujesz jako: </span>
+                <input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+
+                <center><span id="room_name">General</span>
+                    <center>
+
+
+            </div>
+
+            <div id="rooms_panel">
+                <input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
+                <input type="button" ng-click="roomSynch('Technology')" class="btns_rooms" id="btn_room_technology" value="Technology" />
+                <input type="button" ng-click="privateView()" class="btns_rooms" id="inbox" value="Private" />
+
+
+            </div>
+
+            <div id="chat_panel">
+                <div id="boxchat" class="chat_messages" ng-init='globalinit()'>
+                </div>
+                <div>
+                    <input type="button" id="geo" ng-click="geolock()" value="Pokaż gdzie jestem">
+                    <input type="button" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
+                    <input type="button" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
+                    <input type="button" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
+                    <input type="text" id="addr" />
+                    <input type="button" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
+                    <input type="button" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
+                    </label>
+                    <br>
+                    <label>
 						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
-					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
-					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
-					<br>
-					Adresat: <input type="text" id="target" ng-model="priv.target" /><input type="button" value="Wyślij prywatną wiadomość" ng-click="sendprivate()" />
-					<br>
-					<textarea id="privatearea" rows="3" cols="70" ng-model="priv.pmsg"></textarea>
+                    <input id="send" type="button" ng-click="send()" value="Wyślij" />
+                    <input id="clear" type="button" ng-click="clear()" value="Czyść" />
+                    <br> Adresat: <input type="text" id="target" ng-model="priv.target" /><input type="button" value="Wyślij prywatną wiadomość" ng-click="sendprivate()" />
+                    <br>
+                    <textarea id="privatearea" rows="3" cols="70" ng-model="priv.pmsg"></textarea>
 
-				</div>
-			</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

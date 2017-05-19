@@ -175,50 +175,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 
 
         });
-        /*
-		if(room=="General")
-        {
-            $scope.startListeningTech("off");
-            $scope.startListeningPrivate("off");
-            $scope.startListeningGener("on");
-        }
-        if(room=="Technology") {
-            $scope.startListeningPrivate("off");
-            $scope.startListeningGener("off");
-            $scope.startListeningTech("on");
-        }
-		*/
     };
-    /*
-    	$scope.globalInit =  function(){
-    		$scope.startListeningPrivate = function(x) {
-    			var fb = firebase.database().ref().child('privs');
-    			if (x == "on") {
-    				fb.on('child_added', function(snapshot, prevChildKey) {
-    					var messages = snapshot.val();
-    					for (var msg in messages) {
-    						if (messages[msg].target == $scope.core.nick) {
-    							var time = new Date(messages[msg].date);
-    							var srtime = time.toString().substring(0, 25);
-
-    							var insdiv = '<div class="chat somebody">' +
-    								'<div class="photo_box">' +
-    								'<div class="user_photo"></div>' +
-    								'</div>' +
-    								'<div class="message_box">' +
-    								'<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
-    								'<p class="chat_message">' + messages[msg].pmsg + '</p>' +
-    								'</div>' +
-    								'</div>';
-
-    							document.getElementById('boxchat').innerHTML += insdiv;
-    							$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-    						}
-    					}
-    				})
-    			}
-    		};
-    */
     $scope.globalinit = function() {
 
         var startListeningGener = function() {
