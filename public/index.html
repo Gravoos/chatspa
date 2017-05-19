@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="msgsubmit.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         // Initialize Firebase
         var config = {
@@ -21,78 +21,171 @@
         firebase.initializeApp(config);
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
-	<script>
-		function blockUINick() {
-			document.getElementById("pic").style.display = "none";
-			document.getElementById("yt").style.display = "none";
-			document.getElementById("addr").style.display = "none";
-			document.getElementById("apic").style.display = "none";
-			document.getElementById("ayt").style.display = "none";
-			
-			var nick_prompt = prompt("Enter your nickname before using chat. :)");
-			var nick_correct = true;
-			
-			if(nick_prompt.length < 4){
-				var nick_correct = false;
-			}
-			
-			while (!nick_correct) {
-				nick_prompt = prompt("Your nickname is too short. Please enter new nickname. ");
-				
-				if(nick_prompt.length < 4){
-					nick_correct = false;
-				} else {
-					nick_correct = true;
-				}
-			
-			}
-			
-			var selectedDueDateField = document.getElementById("nickname_field");
-			var element = angular.element(selectedDueDateField);
-			element.val(nick_prompt);
-			element.triggerHandler('input');
-			
+    <script>
+        function blockUINick() {
+            document.getElementById("pic").style.display = "none";
+            document.getElementById("yt").style.display = "none";
+            document.getElementById("addr").style.display = "none";
+            document.getElementById("apic").style.display = "none";
+            document.getElementById("ayt").style.display = "none";
+
+            document.getElementById('disablingDiv').style.display = 'block';
+
+            var fb = firebase.database().ref().child('users');
+
+            $('document').ready(function() {
+                $('#btn_submit_nick').click(function() {
+                    var nickname = $('#enter_nick_field').val();
+
+                    fb.once('value', function(snapshot) {
+
+                        console.log("There are " + snapshot.numChildren() + " users");
+
+                        var data = snapshot.val();
+
+                        var valid = true;
+
+                        if (!validate_length(nickname)) {
+                            $('#info_on_disabling_div').text('Username is too short');
+                        } else {
+                            for (var key in data) {
+                                console.log(data[key].username + ' - ' + nickname);
+                                if (nickname == data[key].username) {
+                                    $('#info_on_disabling_div').text('Username is already taken.');
+                                    valid = false;
+                                    break;
+                                }
+                            }
+
+                            if (valid) {
+                                writeUserData(nickname);
+                                document.getElementById('disablingDiv').style.display = 'none';
+
+                                var selectedDueDateField = document.getElementById("nickname_field");
+                                var element = angular.element(selectedDueDateField);
+                                element.val(nickname);
+                                element.triggerHandler('input');
+                            }
+
+                        }
+
+                    });
+
+                })
+
+                $('#enter_nick_field').keypress(function(e) {
+                    if (e.which == 13) { //Enter key pressed
+
+                        $('#btn_submit_nick').click();
+                    }
+                });
+            });
         }
+
+
+        function validate_length(n) {
+            var valid = false;
+
+            if (n.length < 4) {
+                valid = false;
+            } else {
+                valid = true;
+            }
+
+            return valid;
+        }
+
+
+        function writeUserData(name) {
+            firebase.database().ref('users/').push({
+                username: name
+            });
+        }
+
+
         function multimediaButtons() {
-		    document.getElementById("mm").style.display = "none";
-		    document.getElementById("pic").style.display = "inline";
-		    document.getElementById("yt").style.display = "inline";
+            document.getElementById("mm").style.display = "none";
+            document.getElementById("pic").style.display = "inline";
+            document.getElementById("yt").style.display = "inline";
         }
+
         function addElement(x) {
             document.getElementById("pic").style.display = "none";
             document.getElementById("yt").style.display = "none";
             document.getElementById("addr").style.display = "inline";
-            if(x==0){document.getElementById("apic").style.display = "inline";}
-            else {document.getElementById("ayt").style.display = "inline"}
+            if (x == 0) {
+                document.getElementById("apic").style.display = "inline";
+            } else {
+                document.getElementById("ayt").style.display = "inline"
+            }
         }
-        function mlcean() {
-			document.getElementById("addr").style.display = "none";
-			document.getElementById("apic").style.display = "none";
-			document.getElementById("ayt").style.display = "none";
-			document.getElementById("mm").style.display = "inline";
-        }
-		
-		
-	</script>
-</head>
-<body onload="blockUINick()">
-    <div id="whole_page" ng-controller="chatcore">
-	
-        <div class="chatbox" >
-			
-			<div id="welcome_box">
-				<span id="weclome_msg">Chatujesz jako: </span>
-				<input id="nickname_field" type="text" ng-model="core.nick" readonly/>
-					
-				<center><span id="room_name">General</span><center>
-				
-				
-			</div>
-			
-			<div id="rooms_panel">
-				<input type="button" ng-click="roomSynch('General')" class="btns_rooms" id="btn_room_general" value="General" />
-				<input type="button" ng-click="roomSynch('Technology')"class="btns_rooms" id="btn_room_technology" value="Technology" />
 
+        function mlcean() {
+            document.getElementById("addr").style.display = "none";
+            document.getElementById("apic").style.display = "none";
+            document.getElementById("ayt").style.display = "none";
+            document.getElementById("mm").style.display = "inline";
+        }
+		
+		
+		$(window).on('beforeunload', function (e) {
+			if (e.originalEvent) {
+			var ref = firebase.database().ref().child('users');
+				
+			var n = $('#nickname_field').val();
+			console.log(n);
+			
+				
+			ref.orderByChild('username').equalTo(n).once('value').then(function(snapshot) {
+				snapshot.forEach(function(childSnapshot) {
+					//remove each child
+					ref.child(childSnapshot.key).remove();
+				});
+			});
+			
+			}		
+			else $.get("", {
+				async: false
+			});
+			$(this).trigger('beforeunload');
+		});
+
+        $(function() {
+            $('input[type="checkbox"]').click(function() {
+                window.onbeforeunload = function() {};
+            });
+        });
+
+
+
+    </script>
+</head>
+
+<body onload="blockUINick()">
+
+    <div id="disablingDiv">
+        <p id="info_on_disabling_div">Enter your nickname: </p>
+        <input type="text" id="enter_nick_field" />
+        <input type="button" id="btn_submit_nick" value="Zatwierdź" />
+
+    </div>
+
+    <div id="whole_page" class="overlay" ng-controller="chatcore">
+
+
+        <div class="chatbox">
+
+            <div id="welcome_box">
+                <span id="weclome_msg">Chatujesz jako: </span>
+                <input id="nickname_field" type="text" ng-model="core.nick" readonly/>
+
+                <center><span id="room_name">General</span>
+                    <center>
+
+
+            </div>
+
+            <div id="rooms_panel">
 			
 			</div>
 			
@@ -114,10 +207,14 @@
 					<label>
 						<textarea id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.." ></textarea>
 					</label>
-					<input id="send" type="button"  ng-click="send()" value="Wyślij" />
-					<input id="clear" type="button" ng-click="clear()" value="Czyść" />
-				</div>
-			</div>
+
+                    <input id="send" type="button" ng-click="send()" value="Wyślij" />
+                    <input id="clear" type="button" ng-click="clear()" value="Czyść" />
+                    
+
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

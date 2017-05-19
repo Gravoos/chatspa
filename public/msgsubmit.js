@@ -149,50 +149,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 
         });
         $scope.startListeningAny(room);
-        /*
-		if(room=="General")
-        {
-            $scope.startListeningTech("off");
-            $scope.startListeningPrivate("off");
-            $scope.startListeningGener("on");
-        }
-        if(room=="Technology") {
-            $scope.startListeningPrivate("off");
-            $scope.startListeningGener("off");
-            $scope.startListeningTech("on");
-        }
-		*/
     };
-    /*
-    	$scope.globalInit =  function(){
-    		$scope.startListeningPrivate = function(x) {
-    			var fb = firebase.database().ref().child('privs');
-    			if (x == "on") {
-    				fb.on('child_added', function(snapshot, prevChildKey) {
-    					var messages = snapshot.val();
-    					for (var msg in messages) {
-    						if (messages[msg].target == $scope.core.nick) {
-    							var time = new Date(messages[msg].date);
-    							var srtime = time.toString().substring(0, 25);
-
-    							var insdiv = '<div class="chat somebody">' +
-    								'<div class="photo_box">' +
-    								'<div class="user_photo"></div>' +
-    								'</div>' +
-    								'<div class="message_box">' +
-    								'<p class="user_info">' + 'PRIVATE:' + messages[msg].source + ', ' + srtime + '</p>' +
-    								'<p class="chat_message">' + messages[msg].pmsg + '</p>' +
-    								'</div>' +
-    								'</div>';
-
-    							document.getElementById('boxchat').innerHTML += insdiv;
-    							$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-    						}
-    					}
-    				})
-    			}
-    		};
-    */
+	
     $scope.runningIntents = [];
 
     $scope.startListeningAny = function (ident) {
@@ -227,73 +185,5 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 }
             })
         }
-    }
-
-    $scope.globalinit = function() {
-
-
-        var startListeningGener = function() {
-
-            var fb = firebase.database().ref().child('General');
-
-
-            fb.on('child_added', function(snapshot, prevChildKey) {
-
-                var roomCheck = $('#room_name').text();
-
-                if (roomCheck == 'General') {
-
-                    var data = snapshot.val();
-                    var time = new Date(data.date);
-                    var srtime = time.toString().substring(0, 25);
-
-                    var cldiv = '<div class="chat somebody">' +
-                    '<div class="info_box">' +
-                    '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
-                    '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
-                    '</div></div>';
-
-
-                    document.getElementById('boxchat').innerHTML += cldiv;
-
-
-                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-                }
-            })
-        };
-
-
-        var startListeningTech = function() {
-
-            var fb = firebase.database().ref().child('Technology');
-
-
-            fb.on('child_added', function(snapshot, prevChildKey) {
-
-                var roomCheck = $('#room_name').text();
-
-                if (roomCheck == 'Technology') {
-
-                    var data = snapshot.val();
-                    var time = new Date(data.date);
-                    var srtime = time.toString().substring(0, 25);
-
-                    var cldiv = '<div class="chat somebody">' +
-                    '<div class="info_box">' +
-                    '<span class="user_nick">' + data.nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
-                    '<div class="msg_box"><p class="chat_message">' + data.msg + '</p>' +
-                    '</div></div>';
-
-
-                    document.getElementById('boxchat').innerHTML += cldiv;
-
-
-                    $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-                }
-            })
-        };
-
-        startListeningGener();
-        startListeningTech();
     }
 }]);
