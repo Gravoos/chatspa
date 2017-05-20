@@ -22,12 +22,24 @@
     </script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <script>
+        function resetRoomSelector() {
+            document.getElementById('idprivate').style.display = "none";
+            document.getElementById('addprivate').style.display = "inline";
+            document.getElementById('applyprivate').style.display = "none";
+        }
+        function  showRoomField() {
+            document.getElementById('idprivate').style.display = "inline";
+            document.getElementById('applyprivate').style.display = 'inline';
+            document.getElementById('addprivate').style.display = "none";
+        }
         function blockUINick() {
             document.getElementById("pic").style.display = "none";
             document.getElementById("yt").style.display = "none";
             document.getElementById("addr").style.display = "none";
             document.getElementById("apic").style.display = "none";
             document.getElementById("ayt").style.display = "none";
+            document.getElementById('idprivate').style.display = "none";
+            document.getElementById('applyprivate').style.display = "none";
 
             document.getElementById('disablingDiv').style.display = 'block';
 
@@ -205,8 +217,9 @@
                     <input type="text" id="addr" />
                     <input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
                     <input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
-                    <input type="button" class="btns_tool_box" id="addprivate" ng-click="createRoom()" value="Stwórz/dołącz do pokoju prywatnego" />
-                    <input type="text" id="idprivate" ng-model="priv.name" />
+                    <input type="button" class="btns_tool_box" id="addprivate" onclick="showRoomField()" value="Stwórz/dołącz do pokoju prywatnego" />
+                    <input placeholder="Wpisz nazwę pokoju" type="text" id="idprivate" ng-model="priv.name" />
+                    <input type="text" class="btns_tool_box" id="applyprivate" onclick="resetRoomSelector()" ng-click="createRoom()" value="Potwierdź" />
                     </label>
                     <br>
 
