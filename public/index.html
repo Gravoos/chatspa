@@ -158,10 +158,11 @@
 <body onload="blockUINick()">
 
     <div id="disablingDiv">
-        <p id="info_on_disabling_div">Enter your nickname: </p>
-        <input type="text" id="enter_nick_field" />
-        <input type="button" id="btn_submit_nick" value="Zatwierdź" />
-
+		<div class="inside_disabling">
+			<p id="info_on_disabling_div">Enter your nickname: </p>
+			<input type="text" id="enter_nick_field" />
+			<input type="button" class="btns_tool_box" id="btn_submit_nick" value="Ok!" />
+		</div>
     </div>
 
     <div id="whole_page" class="overlay" ng-controller="chatcore">
