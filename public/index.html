@@ -39,7 +39,6 @@
 
                     fb.once('value', function(snapshot) {
 
-                        console.log("There are " + snapshot.numChildren() + " users");
 
                         var data = snapshot.val();
 
@@ -49,7 +48,6 @@
                             $('#info_on_disabling_div').text('Username is too short');
                         } else {
                             for (var key in data) {
-                                console.log(data[key].username + ' - ' + nickname);
                                 if (nickname == data[key].username) {
                                     $('#info_on_disabling_div').text('Username is already taken.');
                                     valid = false;
