@@ -1,5 +1,5 @@
 var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope', '$compile', function($scope,$compile) {
-    $scope.existingRooms = ['General','Technology'];
+    $scope.existingRooms = ['General','Technology','Games','Politics','Sport','Motorization','Tourism','Languages','Feelings'];
     $scope.readyToSend = {};
     $scope.savednick;
     $scope.send = function() {
@@ -117,6 +117,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         if(isRoomAlreadyCreated){
             alert("Ta nazwa jest już zajęta");
         }else {
+			$scope.existingRooms.push($scope.priv.name);
             var ind = '<input type="button" ng-click="roomSynch(\'' + $scope.priv.name + '\')" class="btns_rooms" id="btn_room_' + $scope.priv.name + '" value="' + $scope.priv.name + '" />';
             var tmp = $compile(ind)($scope);
             angular.element(document.getElementById("rooms_panel")).append(tmp);
