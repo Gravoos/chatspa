@@ -169,12 +169,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 					$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
 				}
             }
-
-
-
-
         });
-        $scope.startListeningAny(room);
     };
 	
     $scope.runningIntents = [];
