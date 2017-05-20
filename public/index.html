@@ -152,17 +152,19 @@
                 window.onbeforeunload = function() {};
             });
         });
+
     </script>
 </head>
 
 <body onload="blockUINick()">
 
     <div id="disablingDiv">
-		<div class="inside_disabling">
-			<p id="info_on_disabling_div">Enter your nickname: </p>
-			<input type="text" id="enter_nick_field" />
-			<input type="button" class="btns_tool_box" id="btn_submit_nick" value="Ok!" />
-		</div>
+        <div class="inside_disabling">
+            <p id="info_on_disabling_div">Enter your nickname: </p>
+
+            <input type="text" id="enter_nick_field" />
+            <input type="button" class="btns_tool_box" id="btn_submit_nick" value="Ok!" />
+        </div>
     </div>
 
     <div id="whole_page" class="overlay" ng-controller="chatcore">
@@ -173,7 +175,8 @@
             <div id="welcome_box">
                 <input class="nn" id="nickname_field" type="text" ng-model="core.nick" readonly/>
 
-                <center><span id="room_name">General</span></center>
+                <center><span id="room_name">General</span>
+                </center>
 
             </div>
 

@@ -1,5 +1,5 @@
 body {
-	background-color: #d6d6d6;
+	background-color: #a6a6a6;
 	
 }
 
@@ -33,6 +33,7 @@ body {
 	outline: 0;
 	
 }
+
 
 .btns_rooms:active {
 	border: 1px solid black;
