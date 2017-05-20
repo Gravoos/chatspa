@@ -129,47 +129,9 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     };
 
     $scope.roomSynch = function(room) {
-
         $(".chat").remove();
         $("#room_name").html(room);
-
-
-        var fb = firebase.database().ref().child(room);
-        fb.once('value', function(snapshot) {
-            console.log("There are " + snapshot.numChildren() + " messages");
-
-
-            var data = snapshot.val();
-            console.log(data);
-
-
-            for (var key in data) {
-                console.log(data[key].nick);
-                var time = new Date(data[key].date);
-                var srtime = time.toString().substring(0, 25);
-				var mssg = String(data[key].msg);
-				
-				
-				if(mssg != "undefined"){
-					console.log(mssg);
-					var cldiv = '<div class="chat">' +
-										'<div class="info_box">' +
-											'<span class="user_nick">' + data[key].nick + '</span>'+
-											'<span class="msg_time">'+ srtime + '</span>' +
-										'</div>' +
-										'<div class="msg_box">'+
-											'<p class="chat_message">' + data[key].msg + '</p>' +
-										'</div>'+
-									'</div>';
-
-
-					document.getElementById('boxchat').innerHTML += cldiv;
-
-
-					$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
-				}
-            }
-        });
+        $scope.startListeningAny(room);
     };
 	
     $scope.runningIntents = [];
@@ -180,8 +142,6 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         {
             if(ident==$scope.runningIntents[i]){alreadyRunning=true;}
         }
-
-
         var fb = firebase.database().ref().child(ident);
         if(alreadyRunning==false) {
             $scope.runningIntents.push(ident);
@@ -192,9 +152,6 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                     var time = new Date(data.date);
                     var srtime = time.toString().substring(0, 25);
 					var mssg =  String(data.msg);
-					
-					
-					
 					if(mssg != "undefined"){
 						console.log(mssg);
 						var cldiv = '<div class="chat">' +
@@ -206,11 +163,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 											'<p class="chat_message">' + data.msg + '</p>' +
 										'</div>'+
 									'</div>';
-
-
 						document.getElementById('boxchat').innerHTML += cldiv;
-
-
 						$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
 					
 					}
