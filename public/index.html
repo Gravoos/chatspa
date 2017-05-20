@@ -211,20 +211,20 @@
 
                 <div id="chatting_tools_box">
                     <input type="button" class="btns_tool_box" id="geo" ng-click="geolock()" value="Show location">
-                    <input type="button" class="btns_tool_box" id="mm" onclick="multimediaButtons()" value="Dodaj multimedia" />
-                    <input type="button" class="btns_tool_box" id="pic" onclick="addElement(0)" value="Dodaj zdjęcie" />
-                    <input type="button" class="btns_tool_box" id="yt" onclick="addElement(1)" value="Dodaj film z youtube" />
-                    <input type="text" id="addr" />
-                    <input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Dodaj obrazek" />
-                    <input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Dodaj filmik" />
-                    <input type="button" class="btns_tool_box" id="addprivate" onclick="showRoomField()" value="Stwórz/dołącz do pokoju prywatnego" />
-                    <input placeholder="Wpisz nazwę pokoju" type="text" id="idprivate" ng-model="priv.name" />
-                    <input type="text" class="btns_tool_box" id="applyprivate" onclick="resetRoomSelector()" ng-click="createRoom()" value="Potwierdź" />
+                    <input type="button" class="btns_tool_box" id="mm" onclick="multimediaButtons()" value="Add media" />
+                    <input type="button" class="btns_tool_box" id="pic" onclick="addElement(0)" value="Add picture" />
+                    <input type="button" class="btns_tool_box" id="yt" onclick="addElement(1)" value="Add youtube video" />
+                    <input type="text" id="addr"  placeholder="Put link.."/>
+                    <input type="button" class="btns_tool_box" id="apic" onclick="mlcean()" ng-click="sendpic()" value="Send pic" />
+                    <input type="button" class="btns_tool_box" id="ayt" onclick="mlcean()" ng-click="sendyt()" value="Send video" />
+                    <input type="button" class="btns_tool_box" id="addprivate" onclick="showRoomField()" value="Create/Join private room" />
+                    <input placeholder="Room name.." type="text" id="idprivate" ng-model="priv.name" />
+                    <input type="text" class="btns_tool_box" id="applyprivate" onclick="resetRoomSelector()" ng-click="createRoom()" value="Create/Join" />
                     </label>
                     <br>
 
                     <div>
-                        <textarea id="write_message" id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Napisz wiadomość.."></textarea>
+                        <textarea id="write_message" id="area" rows="3" cols="70" ng-keypress="send_on_enter($event)" ng-model="core.msg" placeholder="Write message.."></textarea>
                         <input class="btns_tool_box" id="send" type="button" ng-click="send()" value="Send" />
                         <input class="btns_tool_box" id="clear" type="button" ng-click="clear()" value="Clear" />
                     </div>
