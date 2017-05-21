@@ -24,6 +24,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
             firebase.database().ref().update(updates);
             $('#area').val("");
             $scope.core.msg = "";
+			document.getElementById("write_message").value = "";
         }
     };
     $scope.sendpic = function() {
@@ -39,6 +40,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
+		document.getElementById("write_message").value = "";
         document.getElementById("addr").value = "";
     }
     $scope.sendyt = function() {
@@ -53,6 +55,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
+		document.getElementById("write_message").value = "";
         document.getElementById("addr").value = "";
     }
     $scope.send_on_enter = function(keyEvent) {
@@ -78,7 +81,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                 //   updates['/user-posts/' + uid + '/' + key] = postData;
                 firebase.database().ref().update(updates);
                 keyEvent.preventDefault();
-
+document.getElementById("write_message").value = "";
                 $scope.core.msg = "";
             }
         }
@@ -103,6 +106,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         updates['/' + room + '/' + key] = $scope.core;
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
+		document.getElementById("write_message").value = "";
         $scope.core.msg = "";
     }
 
@@ -125,7 +129,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     }
 
     $scope.clear = function() {
-        $scope.core = {};
+		document.getElementById("write_message").value = "";
+        $scope.core.msg ="";
     };
 
     $scope.roomSynch = function(room) {
@@ -139,19 +144,24 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
     $scope.loadRoom = function (ident) {
         var fb = firebase.database().ref().child(ident);
         fb.once('value', function(snapshot) {
+			document.getElementById("write_message").value = "";
+			$scope.core.msg = "";
             var data = snapshot.val();
             console.log(data);
             for (var key in data) {
                 console.log(data[key].nick);
                 var time = new Date(data[key].date);
                 var srtime = time.toString().substring(0, 25);
-                var cldiv = '<div class="chat somebody">' +
-                    '<div class="info_box">' +
-                    '<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
-                    '<div class="msg_box"><p class="chat_message">' + data[key].msg + '</p>' +
-                    '</div></div>';
-                document.getElementById('boxchat').innerHTML += cldiv;
-                $("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+				var mssg =  String(data[key].msg);
+				if(!(mssg == "undefined" || mssg == "")){
+					var cldiv = '<div class="chat somebody">' +
+						'<div class="info_box">' +
+						'<span class="user_nick">' + data[key].nick + '</span><span class="msg_time"> ' + srtime + '</span> </div>' +
+						'<div class="msg_box"><p class="chat_message">' + mssg + '</p>' +
+						'</div></div>';
+					document.getElementById('boxchat').innerHTML += cldiv;
+					$("#boxchat").scrollTop($("#boxchat")[0].scrollHeight);
+				}
             }
         });
     }
@@ -172,7 +182,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
                     var time = new Date(data.date);
                     var srtime = time.toString().substring(0, 25);
 					var mssg =  String(data.msg);
-					if(mssg != "undefined"){
+					if(!(mssg == "undefined" || mssg == "")){
 						console.log(mssg);
 						var cldiv = '<div class="chat">' +
 										'<div class="info_box">' +
@@ -180,7 +190,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
 											'<span class="msg_time">'+ srtime + '</span>' +
 										'</div>' +
 										'<div class="msg_box">'+
-											'<p class="chat_message">' + data.msg + '</p>' +
+											'<p class="chat_message">' + mssg+ '</p>' +
 										'</div>'+
 									'</div>';
 						document.getElementById('boxchat').innerHTML += cldiv;
