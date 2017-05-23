@@ -28,7 +28,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         }
     };
     $scope.sendpic = function() {
-
+		var room = $('#room_name').text();
 
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var picaddr = document.getElementById("addr").value;
@@ -36,7 +36,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
-        updates['/writes/' + key] = $scope.core;
+        updates['/'+room+'/' + key] = $scope.core;
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
@@ -44,6 +44,8 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         document.getElementById("addr").value = "";
     }
     $scope.sendyt = function() {
+		var room = $('#room_name').text();
+		
         $scope.core.date = firebase.database.ServerValue.TIMESTAMP;
         var ytaddr = document.getElementById("addr").value;
         var yid = ytaddr.substring(ytaddr.length - 11, ytaddr.length);
@@ -51,7 +53,7 @@ var msgsubmit = angular.module('msgsubmit', []).controller('chatcore', ['$scope'
         var fb = firebase.database();
         var key = firebase.database().ref().child('posts').push().key;
         var updates = {};
-        updates['/writes/' + key] = $scope.core;
+        updates['/'+room+'/' + key] = $scope.core;
         //   updates['/user-posts/' + uid + '/' + key] = postData;
         firebase.database().ref().update(updates);
         $scope.core.msg = "";
